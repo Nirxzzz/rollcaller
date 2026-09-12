@@ -16,15 +16,28 @@ Supported platforms: Android, iOS, and Windows (desktop runs via `sqflite_common
 - Score the picked student on the spot (1–10); scores can be edited later
 - Picked / not-yet-picked students are shown in separate lists; in non-repeatable mode picked students are automatically excluded
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-27-934_com.ieening.rollcall.jpg" width="46%" alt="Random Calling" />
+</p>
+
 ### Attendance Check-in
 - Four attendance statuses: **Present, Late, Excused, Absent**, each highlighted with its own color
 - Search by student number or name; one-tap "mark all present" / "mark all absent"
 - Attendance statistics (total count and per-status counts)
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-32-770_com.ieening.rollcall.jpg" width="46%" alt="Attendance Check-in" />
+</p>
+
 ### Class & Student Management
 - Class management: class name, expected student count, teacher name, notes; full/over-capacity status is shown automatically
 - Student roster management: student number and name, with search by number or name
 - **Bulk import students from Excel**: a ready-to-use template is bundled in the app (`assets/templates/student_import_template.xlsx`) — copy it out, fill it in, and import
+
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-37-301_com.ieening.rollcall.jpg" width="45%" alt="Class Management" />
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-39-943_com.ieening.rollcall.jpg" width="45%" alt="Student Management" />
+</p>
 
 ### Call Records
 - Random-call records and attendance records are managed separately
@@ -32,10 +45,19 @@ Supported platforms: Android, iOS, and Windows (desktop runs via `sqflite_common
 - **Archive** records: once archived, the caller and its records are locked and cannot be modified
 - Export records to **Excel (.xlsx)** with columns such as index, caller name, class, student number, name, score/attendance status, time, and remarks
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-42-741_com.ieening.rollcall.jpg" width="45%" alt="Random Call Records" />
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-45-179_com.ieening.rollcall.jpg" width="45%" alt="Attendance Records" />
+</p>
+
 ### Settings
 - Theme switching: light / dark / follow system, with several built-in color schemes and a custom theme color
 - **WebDAV cloud backup**: manually back up and restore data; browse and delete backup history
 - **Auto backup**: when enabled, data is backed up to your WebDAV server every time the app goes to the background
+
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-50-49-539_com.ieening.rollcall.jpg" width="46%" alt="Settings" />
+</p>
 
 ---
 

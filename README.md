@@ -16,15 +16,28 @@
 - 抽取后当场评分（1–10 分），支持后续修改分数
 - 已抽取 / 未抽取学生分栏展示，不可重复模式下自动排除已抽学生
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-47-43-634_com.ieening.rollcall.jpg" width="46%" alt="随机点名" />
+</p>
+
 ### 签到点名
 - 四种签到状态：**已签到、迟到、请假、未签到**，颜色区分一目了然
 - 支持按学号/姓名搜索，一键全部签到 / 一键全部未签
 - 签到统计（总人数、各状态人数)
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-15-163_com.ieening.rollcall.jpg" width="46%" alt="签到点名" />
+</p>
+
 ### 班级与学生管理
 - 教学班级管理：班级名称、应有人数、任课教师、备注，自动显示满员/超员状态
 - 学生名单管理：学号、姓名，支持按学号或姓名搜索
 - **Excel 批量导入学生**：应用内提供导入模板（`assets/templates/student_import_template.xlsx`），一键复制模板后填写导入
+
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-19-273_com.ieening.rollcall.jpg" width="45%" alt="班级管理" />
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-21-285_com.ieening.rollcall.jpg" width="45%" alt="学生名单管理" />
+</p>
 
 ### 点名记录
 - 随机点名记录、签到点名记录分开管理
@@ -32,10 +45,20 @@
 - 记录 **归档** 功能：归档后点名器及记录锁定，不可修改
 - 记录导出为 **Excel（.xlsx）** 文件，包含序号、点名器、班级、学号、姓名、分数/出席情况、时间、备注等列
 
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-23-912_com.ieening.rollcall.jpg" width="45%" alt="随机点名记录" />
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-26-180_com.ieening.rollcall.jpg" width="45%" alt="签到点名记录" />
+</p>
+
 ### 设置
 - 主题切换：浅色 / 深色 / 跟随系统，内置多种配色并支持自定义主题色
+- **多语言**：简体中文 / English，可手动切换或跟随系统语言
 - **WebDAV 云备份**：手动备份 / 恢复数据，支持查看与删除备份历史
 - **自动备份**：开启后每次应用切到后台时自动备份到 WebDAV 服务器
+
+<p align="center">
+  <img src="assets/readme/Screenshot_2026-09-12-22-48-31-152_com.ieening.rollcall.jpg" width="46%" alt="设置" />
+</p>
 
 ---
 
