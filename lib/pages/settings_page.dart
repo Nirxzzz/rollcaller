@@ -503,14 +503,22 @@ class _SettingsState extends State<SettingsPage> {
                                 24.0.sp,
                           ),
                           SizedBox(width: 8.0.w),
-                          Text(
-                            l10n.testConnection,
-                            style: Theme.of(context).textTheme.titleMedium!
-                                .copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimary,
-                                ),
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                l10n.testConnection,
+                                maxLines: 1,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
+                                    ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -581,14 +589,22 @@ class _SettingsState extends State<SettingsPage> {
                                 24.0.sp,
                           ),
                           SizedBox(width: 8.0.w),
-                          Text(
-                            l10n.saveConfig,
-                            style: Theme.of(context).textTheme.titleMedium!
-                                .copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimary,
-                                ),
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                l10n.saveConfig,
+                                maxLines: 1,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
+                                    ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -702,10 +718,20 @@ class _SettingsState extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     SizedBox(width: 8.w),
-                    Text(
-                      l10n.manualBackup,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l10n.manualBackup,
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
                       ),
                     ),
                   ],
@@ -758,10 +784,20 @@ class _SettingsState extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     SizedBox(width: 8.w),
-                    Text(
-                      l10n.restoreData,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l10n.restoreData,
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
                       ),
                     ),
                   ],
