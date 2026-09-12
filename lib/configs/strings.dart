@@ -24,4 +24,7 @@ class KString {
 
   // Theme preference key (SharedPreferences)
   static const String themeModeStyleOptionKey = 'themeModeStyleOption';
+
+  // Language preference key (SharedPreferences): 'system', 'zh' or 'en'
+  static const String languagePreferenceKey = 'languagePreference';
 }

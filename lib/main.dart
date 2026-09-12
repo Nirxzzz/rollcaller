@@ -20,6 +20,7 @@ import 'configs/theme_style_option_enum.dart'
 import 'l10n/generated/app_localizations.dart';
 import 'pages/index_page.dart';
 import 'pages/splash_page.dart';
+import 'providers/locale_provider.dart';
 import 'providers/them_switcher_provider.dart';
 import 'utils/attendance_call_record_dao.dart';
 import 'utils/attendance_caller_dao.dart';
@@ -38,6 +39,9 @@ void main() {
         ),
         ChangeNotifierProvider<ThemeSwitcherProvider>(
           create: (_) => ThemeSwitcherProvider(),
+        ),
+        ChangeNotifierProvider<LocaleProvider>(
+          create: (_) => LocaleProvider(),
         ),
       ],
       child: MyApp(),
@@ -96,6 +100,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     await Future.delayed(Duration(seconds: 1));
   }
 
+  Future<void> _getLanguageInfo() async {
+    // Read the saved language preference ('system', 'zh' or 'en').
+    final storage = await _storage;
+    final languageCode = storage.getString(KString.languagePreferenceKey);
+    final Locale? locale = switch (languageCode) {
+      'zh' => const Locale('zh'),
+      'en' => const Locale('en'),
+      _ => null,
+    };
+    if (mounted) {
+      context.read<LocaleProvider>().setLocaleWithoutNotify(locale);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -104,7 +122,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       splitScreenMode: true,
       builder: (_, child) {
         return FutureBuilder(
-          future: _getThemeInfo(),
+          future: Future.wait([_getThemeInfo(), _getLanguageInfo()]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return MaterialApp(
@@ -112,6 +130,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 localizationsDelegates:
                     AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
+                // Forced locale chosen in settings; null means "follow system".
+                locale: context.watch<LocaleProvider>().locale,
                 // Follow the device locale for Chinese; fall back to English
                 // for every other language.
                 localeResolutionCallback: (deviceLocale, supportedLocales) {

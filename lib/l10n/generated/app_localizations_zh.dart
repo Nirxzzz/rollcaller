@@ -663,6 +663,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get followSystem => '跟随系统';
 
   @override
+  String get languageSettings => '语言';
+
+  @override
+  String get languageChinese => '中文';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
   String get light => '浅色';
 
   @override

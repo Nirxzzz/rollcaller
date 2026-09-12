@@ -17,6 +17,7 @@ import '../configs/strings.dart';
 import '../configs/theme_style_option_enum.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../models/back_up_model.dart';
+import '../providers/locale_provider.dart';
 import '../providers/them_switcher_provider.dart';
 import '../utils/attendance_call_record_dao.dart';
 import '../utils/attendance_caller_dao.dart';
@@ -156,6 +157,9 @@ class _SettingsState extends State<SettingsPage> {
             ),
             // 主题选择
             _buildThemeSelectWidget(),
+            // 语言选择
+            _buildLanguageSelectWidget(),
+            SizedBox(height: 8.h),
 
             Expanded(
               child: SingleChildScrollView(
@@ -1192,8 +1196,107 @@ class _SettingsState extends State<SettingsPage> {
     }
   }
 
-  // 主题设置
-  // 主题控制组件
+  // Language settings
+  Widget _buildLanguageSelectWidget() {
+    final l10n = AppLocalizations.of(context);
+    final selectedCode = context.watch<LocaleProvider>().languageCode;
+    return Container(
+      padding: EdgeInsets.all(8.w),
+      margin: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(6.w),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).shadowColor.withAlpha(100),
+            spreadRadius: 1.w,
+            blurRadius: 2.w,
+            offset: Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline,
+          width: 2.w,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.h),
+            child: Text(
+              l10n.languageSettings,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            children: [
+              _buildLanguageOption(
+                code: 'system',
+                label: l10n.followSystem,
+                selected: selectedCode == 'system',
+              ),
+              SizedBox(width: 8.w),
+              _buildLanguageOption(
+                code: 'zh',
+                label: l10n.languageChinese,
+                selected: selectedCode == 'zh',
+              ),
+              SizedBox(width: 8.w),
+              _buildLanguageOption(
+                code: 'en',
+                label: l10n.languageEnglish,
+                selected: selectedCode == 'en',
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+        ],
+      ),
+    );
+  }
+
+  Expanded _buildLanguageOption({
+    required String code,
+    required String label,
+    required bool selected,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => context.read<LocaleProvider>().setLanguage(code),
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+          decoration: BoxDecoration(
+            color: selected
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(6.r),
+            border: Border.all(
+              color: selected
+                  ? Colors.transparent
+                  : Theme.of(context).colorScheme.outline,
+              width: 1.w,
+            ),
+          ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: selected
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildThemeSelectWidget() {
     final l10n = AppLocalizations.of(context);
     return GestureDetector(

@@ -675,6 +675,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followSystem => 'Follow system';
 
   @override
+  String get languageSettings => 'Language';
+
+  @override
+  String get languageChinese => '中文';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
   String get light => 'Light';
 
   @override
