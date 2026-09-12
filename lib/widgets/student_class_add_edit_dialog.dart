@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/student_class_model.dart';
 import '../utils/student_class_dao.dart';
 
 class StudentClassAddEditDialog extends StatefulWidget {
   final StudentClassModel studentClass;
   final String title;
+  final bool isAdd;
 
   const StudentClassAddEditDialog({
     super.key,
     required this.studentClass,
     required this.title,
+    required this.isAdd,
   });
 
   @override
@@ -34,12 +37,12 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
   // 表单验证键
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool isAdd = false;
+  bool _isAdd = false;
 
   @override
   initState() {
     super.initState();
-    isAdd = widget.title == '添加班级';
+    _isAdd = widget.isAdd;
     classNameController.text = widget.studentClass.className;
     studentQuantityController.text = widget.studentClass.studentQuantity
         .toString();
@@ -49,6 +52,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
       title: Text(widget.title),
       content: Form(
@@ -59,10 +63,10 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(vertical: 4.w),
             children: [
-              _buildClassNameInfoRow('班级名称（必填）'),
-              _buildClassQuantityInfoRowInt('学生数量（必填）'),
-              _buildInfoRow('教师姓名（可选）', teacherNameController),
-              _buildInfoRow('备注（可选）', notesController),
+              _buildClassNameInfoRow(l10n.classNameRequiredLabel),
+              _buildClassQuantityInfoRowInt(l10n.studentQuantityRequiredLabel),
+              _buildInfoRow(l10n.teacherNameOptionalLabel, teacherNameController),
+              _buildInfoRow(l10n.notesOptional, notesController),
             ],
           ),
         ),
@@ -72,16 +76,16 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('取消'),
+          child: Text(l10n.cancel),
         ),
         TextButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              // 处理添加/编辑学生班级的逻辑
+              // Handle add/edit student class logic
               _saveOnPressed();
             }
           },
-          child: const Text('确定'),
+          child: Text(l10n.confirm),
         ),
       ],
     );
@@ -98,6 +102,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
   }
 
   Padding _buildClassNameInfoRow(String label) {
+    final l10n = AppLocalizations.of(context);
     bool isClassNameUnique = true;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0.w),
@@ -114,7 +119,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
                 (onValue) => {
                   if (onValue)
                     {
-                      if (!isAdd &&
+                      if (!_isAdd &&
                           (classNameController.text ==
                               widget.studentClass.className))
                         isClassNameUnique = true
@@ -128,10 +133,10 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return '班级名称不能为空';
+            return l10n.classNameRequired;
           }
           if (!isClassNameUnique) {
-            return '$value重复使用';
+            return l10n.valueDuplicated(value);
           }
           return null; // 如果没有找到重复值，返回null表示验证通过
         },
@@ -154,7 +159,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return '学生人数不能为空';
+            return AppLocalizations.of(context).studentQuantityRequired;
           }
           return null;
         },
@@ -163,6 +168,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
   }
 
   Future<void> _saveOnPressed() async {
+    final l10n = AppLocalizations.of(context);
     // 表单验证通过，执行添加/编辑操作
     widget.studentClass.className = classNameController.text;
     widget.studentClass.studentQuantity = int.parse(
@@ -173,7 +179,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
     // 获取数据库dao
     var classDao = StudentClassDao(); // 创建StudentClassDao实例。
 
-    if (isAdd) {
+    if (_isAdd) {
       // 添加操作
       widget.studentClass.created = DateTime.now();
       classDao.insertStudentClass(widget.studentClass).then((id) {
@@ -183,7 +189,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  '添加成功',
+                  l10n.addSuccess,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -198,7 +204,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  '添加失败',
+                  l10n.addFailed,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -218,7 +224,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  '更新成功',
+                  l10n.updateSuccess,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -233,7 +239,7 @@ class _StudentClassAddEditDialogState extends State<StudentClassAddEditDialog> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  '更新失败',
+                  l10n.updateFailed,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),

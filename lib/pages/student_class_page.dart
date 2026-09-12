@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/student_class_model.dart';
 import '../models/student_model.dart';
 import '../utils/attendance_caller_dao.dart';
@@ -42,6 +42,7 @@ class _StudentClassState extends State<StudentClassPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -51,7 +52,7 @@ class _StudentClassState extends State<StudentClassPage> {
             Container(
               padding: EdgeInsets.all(12.w),
               child: Text(
-                KString.studentClassAppBarTitle,
+                l10n.studentClassAppBarTitle,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
@@ -61,9 +62,8 @@ class _StudentClassState extends State<StudentClassPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
-                      return Text(
-                        '${KString.errorPrefix}${snapshot.error}',
-                      ); // 加载班级失败
+                      // 加载班级失败
+                      return Text(l10n.loadFailed('${snapshot.error}'));
                     } else {
                       _studentClassMap = snapshot.data!;
                       return SmartRefresher(
@@ -89,7 +89,7 @@ class _StudentClassState extends State<StudentClassPage> {
                             if (_studentClassMap.isEmpty) {
                               return Center(
                                 child: Text(
-                                  KString.noStudentClass, // 暂无班级
+                                  l10n.noStudentClass,
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(fontStyle: FontStyle.italic),
                                 ),
@@ -162,7 +162,7 @@ class _StudentClassState extends State<StudentClassPage> {
                       );
                     }
                   } else {
-                    return Center(child: Text(KString.noData)); // 暂无数据...
+                    return Center(child: Text(l10n.noData));
                   }
                 },
               ),
@@ -184,7 +184,8 @@ class _StudentClassState extends State<StudentClassPage> {
                   notes: '',
                   created: DateTime.now(),
                 ),
-                title: KString.addStudentClass, // 添加班级
+                title: l10n.addStudentClass,
+                isAdd: true,
               );
             },
           ).then((onValue) {
@@ -193,7 +194,7 @@ class _StudentClassState extends State<StudentClassPage> {
             }
           });
         },
-        tooltip: KString.addStudentClass, // 添加班级
+        tooltip: l10n.addStudentClass,
         child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
       ),
     );
@@ -287,14 +288,16 @@ class _StudentClassState extends State<StudentClassPage> {
     ],
   );
 
-  Row _classInfoWidget(StudentClassModel studentClass) => Row(
+  Row _classInfoWidget(StudentClassModel studentClass) {
+    final l10n = AppLocalizations.of(context);
+    return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            KString.studentClassCount, // 班级现有人数
+            l10n.studentClassCount,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
             ),
@@ -308,7 +311,7 @@ class _StudentClassState extends State<StudentClassPage> {
           ),
           SizedBox(height: 12.0.h),
           Text(
-            KString.studentCount, // 学生现有人数
+            l10n.studentCount,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
             ),
@@ -326,7 +329,7 @@ class _StudentClassState extends State<StudentClassPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            KString.teacher, // 教师
+            l10n.teacher,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
             ),
@@ -340,7 +343,7 @@ class _StudentClassState extends State<StudentClassPage> {
           ),
           SizedBox(height: 12.0.h),
           Text(
-            KString.createTime, // 创建时间
+            l10n.createTime,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
             ),
@@ -356,11 +359,14 @@ class _StudentClassState extends State<StudentClassPage> {
       ),
     ],
   );
+  }
 
   Row _actionsWidget(
     BuildContext context,
     StudentClassModel studentClass,
-  ) => Row(
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       TextButton.icon(
@@ -371,7 +377,8 @@ class _StudentClassState extends State<StudentClassPage> {
             builder: (BuildContext context) {
               return StudentClassAddEditDialog(
                 studentClass: studentClass,
-                title: '编辑班级',
+                title: l10n.editStudentClass,
+                isAdd: false,
               );
             },
           ).then((onValue) {
@@ -382,7 +389,7 @@ class _StudentClassState extends State<StudentClassPage> {
         },
         icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.secondary),
         label: Text(
-          KString.edit, // 编辑
+          l10n.edit,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
           ),
@@ -397,14 +404,12 @@ class _StudentClassState extends State<StudentClassPage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text(KString.confirmDeleteCallerTitle), // 确认删除
-                content: Text(
-                  KString.deleteClassWarnning,
-                ), // '确定要删除班级吗？此操作不可恢复。'
+                title: Text(l10n.confirmDelete),
+                content: Text(l10n.deleteClassWarnning),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(KString.cancel), // 取消
+                    child: Text(l10n.cancel),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -448,8 +453,7 @@ class _StudentClassState extends State<StudentClassPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                KString
-                                    .forbitDeleteClassWarnningDetail, // '该班级下还有学生、随机点名器、签到点名器，无法删除。请先删除班级下的所有学生、随机点名器、签到点名器。'
+                                l10n.forbitDeleteClassWarnningDetail,
                                 style: TextStyle(
                                   color: Theme.of(
                                     context,
@@ -467,7 +471,7 @@ class _StudentClassState extends State<StudentClassPage> {
                       }
                     },
                     child: Text(
-                      KString.delete, // 删除
+                      l10n.delete,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: Theme.of(context).colorScheme.error,
                       ),
@@ -480,14 +484,15 @@ class _StudentClassState extends State<StudentClassPage> {
         },
         icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
         label: Text(
-          KString.delete, // 删除
+          l10n.delete,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
             color: Theme.of(context).colorScheme.error,
           ),
         ),
       ),
     ],
-  );
+    );
+  }
 
   Icon _getQuantityStatusIcon(StudentClassModel studentClass) {
     int classQuantity = studentClass.classQuantity;
@@ -512,14 +517,13 @@ class _StudentClassState extends State<StudentClassPage> {
   }
 
   String _getQuantityStatusInfo(StudentClassModel studentClass) {
+    final l10n = AppLocalizations.of(context);
     int classQuantity = studentClass.classQuantity;
     return classQuantity == studentClass.studentQuantity
-        ? KString
-              .classFull // '班级人数已满'
+        ? l10n.classFull
         : classQuantity < studentClass.studentQuantity
-        ? KString
-              .classNotFull // '班级人数未满'
-        : KString.classOverQuantity; // '班级人数超员'
+        ? l10n.classNotFull
+        : l10n.classOverQuantity;
   }
 
   Color _getQuantityStatusDecorationColor(StudentClassModel studentClass) {

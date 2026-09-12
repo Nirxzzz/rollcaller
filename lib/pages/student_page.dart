@@ -11,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart'
     show Permission, PermissionActions, PermissionStatusGetters;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/student_class_group.dart';
 import '../models/student_class_model.dart';
 import '../models/student_model.dart';
@@ -87,6 +87,7 @@ class _StudentPageState extends State<StudentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -96,7 +97,7 @@ class _StudentPageState extends State<StudentPage> {
             Container(
               padding: EdgeInsets.all(12.w),
               child: Text(
-                '学生名单管理',
+                l10n.studentAppBarTitle,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
@@ -203,7 +204,8 @@ class _StudentPageState extends State<StudentPage> {
                 studentNumber: '',
                 created: DateTime.now(),
               ),
-              title: KString.addStudent, // '添加学生'
+              title: l10n.addStudent,
+              isAdd: true,
             ),
           ).then((value) {
             if (value == true) {
@@ -263,7 +265,9 @@ class _StudentPageState extends State<StudentPage> {
     );
 
     var studentClass = StudentClassModel(
-      className: KString.noClassStudent, // '无班级学生'
+      // Sentinel group (id = -1) for students without a class; its label is
+      // resolved via AppLocalizations.noClassStudent at display time.
+      className: '',
       studentQuantity: allStudents.length,
       teacherName: '',
       notes: '',
@@ -298,14 +302,16 @@ class _StudentPageState extends State<StudentPage> {
     _refreshController.loadComplete();
   }
 
-  Expanded _searchWidget() => Expanded(
+  Expanded _searchWidget() {
+    final l10n = AppLocalizations.of(context);
+    return Expanded(
     child: Padding(
       padding: EdgeInsets.all(8.r),
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search),
-          hintText: KString.searchStudentNumberOrName, // '搜索学号或姓名...'
+          hintText: l10n.searchStudentNumberOrName,
           hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Theme.of(context).colorScheme.onSurface,
           ),
@@ -321,9 +327,11 @@ class _StudentPageState extends State<StudentPage> {
         ),
       ),
     ),
-  );
+    );
+  }
 
   GestureDetector _classTitleWidget(int groupIndex) {
+    final l10n = AppLocalizations.of(context);
     StudentClassGroup group =
         _filterClassGroups![_filterClassGroups?.keys.toList()[groupIndex]]!;
     return GestureDetector(
@@ -344,13 +352,15 @@ class _StudentPageState extends State<StudentPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              group.studentClass.className,
+              group.studentClass.id == -1
+                  ? l10n.noClassStudent
+                  : group.studentClass.className,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             Text(
-              '${group.students.length}${KString.peopleountSuffix}', // '人'
+              l10n.peopleCount(group.students.length),
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurface.withAlpha(110),
               ),
@@ -362,6 +372,9 @@ class _StudentPageState extends State<StudentPage> {
   }
 
   Widget _studentItemWidget(StudentModel student) {
+    final l10n = AppLocalizations.of(context);
+    final String createdDateString =
+        '${student.created.year}-${student.created.month.toString().padLeft(2, '0')}-${student.created.day.toString().padLeft(2, '0')}';
     return Container(
       margin: EdgeInsets.only(
         bottom: 8.0.h,
@@ -422,7 +435,7 @@ class _StudentPageState extends State<StudentPage> {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  '${KString.createTimePrefix}${'${student.created.year}-${student.created.month.toString().padLeft(2, '0')}-${student.created.day.toString().padLeft(2, '0')}'}',
+                  l10n.createdAtLabel(createdDateString),
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Theme.of(
                       context,
@@ -459,7 +472,8 @@ class _StudentPageState extends State<StudentPage> {
                     builder: (BuildContext context) {
                       return StudentAddEditDialog(
                         student: student,
-                        title: KString.editStudent,
+                        title: l10n.editStudent,
+                        isAdd: false,
                       );
                     },
                   ).then((value) {
@@ -479,12 +493,12 @@ class _StudentPageState extends State<StudentPage> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text(KString.confirmDeleteCallerTitle), // '确认删除'
-                      content: const Text(KString.confirmDeleteStudentContent), // '确定要删除该学生吗？此操作不可恢复。'
+                      title: Text(l10n.confirmDelete),
+                      content: Text(l10n.confirmDeleteStudentContent),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text(KString.cancel), // '取消'
+                          child: Text(l10n.cancel),
                         ),
                         TextButton(
                           onPressed: () async {
@@ -510,7 +524,7 @@ class _StudentPageState extends State<StudentPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      KString.confirmDeleteStudentWarnningDetail, // '该学生下有随机点名记录或签到点名记录，无法删除。请先删除该学生下的所有随机点名记录或签到点名记录。'
+                                      l10n.confirmDeleteStudentWarnningDetail,
                                       style: TextStyle(
                                         color: Theme.of(context).colorScheme.onInverseSurface,
                                       ),
@@ -532,7 +546,7 @@ class _StudentPageState extends State<StudentPage> {
                               Navigator.of(context).pop();
                             }
                           },
-                          child: const Text(KString.delete), // '删除'
+                          child: Text(l10n.delete),
                         ),
                       ],
                     ),
@@ -547,6 +561,8 @@ class _StudentPageState extends State<StudentPage> {
   }
 
   Future<void> _importStudentsFromExcel() async {
+    // Capture localizations before any async gap.
+    final l10n = AppLocalizations.of(context);
     try {
       // 选择Excel文件
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -558,24 +574,32 @@ class _StudentPageState extends State<StudentPage> {
       var bytes = File(result.files.single.path!).readAsBytesSync();
       var excel = Excel.decodeBytes(bytes);
       int totalCount = 0;
-      // 解析学生工作表
+      // Parse the student worksheet. Headers are accepted in both languages
+      // so files generated in any locale (and the bundled Chinese template)
+      // always import correctly.
+      const studentNumberHeaders = {'学号', 'Student No.', 'Student Number'};
+      const studentNameHeaders = {'姓名', 'Name'};
+      const classHeaders = {'班级', 'Class', 'Classes'};
       for (var table in excel.tables.keys) {
-        // 读取第一列，确认 学号	姓名	班级 行号
+        // Read the header row and locate the number/name/class columns
         var firstColumn = excel.tables[table]!.rows[0];
-        // 确认 学号	姓名	班级 行号
         int studentNumberIndex = -1;
         int nameIndex = -1;
         int classNameIndex = -1;
         for (var i = 0; i < firstColumn.length; i++) {
-          if (firstColumn[i]?.value?.toString() == KString.studentNumber) {
+          final header = firstColumn[i]?.value?.toString().trim() ?? '';
+          if (header == l10n.studentNumber ||
+              studentNumberHeaders.contains(header)) {
             studentNumberIndex = i;
-          } else if (firstColumn[i]?.value?.toString() == KString.name) {
+          } else if (header == l10n.name ||
+              studentNameHeaders.contains(header)) {
             nameIndex = i;
-          } else if (firstColumn[i]?.value?.toString() == KString.className) {
+          } else if (header == l10n.className ||
+              classHeaders.contains(header)) {
             classNameIndex = i;
           }
         }
-        // 从第2行开始读取学生数据
+        // Read student data starting from the second row
         for (var row in excel.tables[table]!.rows.skip(1)) {
           String studentNumber =
               row[studentNumberIndex]?.value?.toString() ?? '';
@@ -644,9 +668,7 @@ class _StudentPageState extends State<StudentPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              KString.importSuccessPrefix +
-                  totalCount.toString() +
-                  KString.importSuccessSuffix, // '成功导入 $totalCount 个学生'
+              l10n.importStudentsSuccess(totalCount),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -663,7 +685,7 @@ class _StudentPageState extends State<StudentPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              KString.importStudentsError, // '导入学生错误'
+              l10n.importStudentsError,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -677,8 +699,17 @@ class _StudentPageState extends State<StudentPage> {
   }
 
   void _copyStudentImportTemplateExcel() {
-    // 读取模板文件 Saves as: student_import_template.xlsx
-    // 请求权限
+    // Capture localizations before any async gap.
+    final l10n = AppLocalizations.of(context);
+    final isEnglishLocale =
+        Localizations.localeOf(context).languageCode == 'en';
+    final templateAssetPath = isEnglishLocale
+        ? 'assets/templates/student_import_template_en.xlsx'
+        : 'assets/templates/student_import_template.xlsx';
+    final templateFileName = isEnglishLocale
+        ? 'student_import_template_en'
+        : 'student_import_template';
+    // Request permission
     Permission.manageExternalStorage.request().then((status) {
       if (!status.isGranted) {
         // 处理权限拒绝
@@ -686,7 +717,7 @@ class _StudentPageState extends State<StudentPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                KString.pleaseGrantStoragePermission, // '请授予存储权限'
+                l10n.pleaseGrantStoragePermission,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onInverseSurface,
                 ),
@@ -698,13 +729,11 @@ class _StudentPageState extends State<StudentPage> {
         }
       } else {
         // 权限已授予，执行文件保存操作
-        rootBundle.load('assets/templates/student_import_template.xlsx').then((
-          value,
-        ) {
+        rootBundle.load(templateAssetPath).then((value) {
           FileSaver.instance
               .saveFile(
                 bytes: value.buffer.asUint8List(),
-                name: "student_import_template",
+                name: templateFileName,
                 fileExtension: "xlsx",
                 mimeType: MimeType.microsoftExcel,
               )
@@ -714,7 +743,7 @@ class _StudentPageState extends State<StudentPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        KString.templateFilePathPrefix + value, // '模板文件已复制到：$value'
+                        l10n.templateCopied(value),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),

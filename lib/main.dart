@@ -17,6 +17,7 @@ import 'configs/back_up_type.dart' show BackUpType, BackUpTypeExtension;
 import 'configs/strings.dart';
 import 'configs/theme_style_option_enum.dart'
     show ThemeStyleOptionExtension, ThemeStyleOption;
+import 'l10n/generated/app_localizations.dart';
 import 'pages/index_page.dart';
 import 'pages/splash_page.dart';
 import 'providers/them_switcher_provider.dart';
@@ -108,7 +109,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             if (snapshot.connectionState == ConnectionState.done) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                // 定制主题
+                localizationsDelegates:
+                    AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                // Follow the device locale for Chinese; fall back to English
+                // for every other language.
+                localeResolutionCallback: (deviceLocale, supportedLocales) {
+                  if (deviceLocale?.languageCode == 'zh') {
+                    return const Locale('zh');
+                  }
+                  return const Locale('en');
+                },
+                // Custom theme
                 theme: context.watch<ThemeSwitcherProvider>().theme,
                 darkTheme: context.watch<ThemeSwitcherProvider>().darkTheme,
                 themeMode: context.watch<ThemeSwitcherProvider>().themeMode,
@@ -165,7 +177,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           await _backupData(client: client, backUpType: BackUpType.auto);
         } catch (e) {
           // ! 8、自动备份失败
-          log('WebDav连接失败');
+          log('WebDAV connection failed');
           return;
         }
       }
@@ -199,7 +211,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     final timeKey =
         '${t.year}${t.month.toString().padLeft(2, '0')}${t.day.toString().padLeft(2, '0')}${t.hour.toString().padLeft(2, '0')}${t.minute.toString().padLeft(2, '0')}${t.second.toString().padLeft(2, '0')}';
     final fileName =
-        '${KString.backupFileName}_${backUpType.typeText}_$timeKey.json';
+        '${KString.backupFileName}_${backUpType.fileToken}_$timeKey.json';
     final tempFilePath = join(tempDir.path, fileName);
     final tempFile = File(tempFilePath);
     await tempFile.writeAsString(jsonString);
@@ -215,10 +227,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // ! 5、删除临时文件
       await tempFile.delete();
       // ! 6、自动备份成功
-      log('备份成功：$fileName');
+      log('Backup succeeded: $fileName');
     } catch (e) {
       // ! 7、自动备份失败
-      log('备份失败：$e');
+      log('Backup failed: $e');
     }
   }
 

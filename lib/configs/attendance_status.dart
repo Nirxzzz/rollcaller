@@ -1,25 +1,27 @@
 import 'dart:ui';
-// 签到状态枚举
 
+import '../l10n/generated/app_localizations.dart';
+
+// Attendance status enum
 enum AttendanceStatus {
-  present, // 已签到
-  late, // 迟到
-  excused, // 请假
-  absent, // 未签到
+  present,
+  late,
+  excused,
+  absent,
 }
 
-// 签到状态扩展
+// Attendance status extension
 extension AttendanceStatusExtension on AttendanceStatus {
-  String get statusText {
+  String label(AppLocalizations l10n) {
     switch (this) {
       case AttendanceStatus.present:
-        return '已签到';
+        return l10n.statusPresent;
       case AttendanceStatus.late:
-        return '迟到';
+        return l10n.statusLate;
       case AttendanceStatus.excused:
-        return '请假';
+        return l10n.statusExcused;
       case AttendanceStatus.absent:
-        return '未签到';
+        return l10n.statusAbsent;
     }
   }
 
@@ -39,13 +41,13 @@ extension AttendanceStatusExtension on AttendanceStatus {
   Color get statusColor {
     switch (this) {
       case AttendanceStatus.present:
-        return const Color(0xFF81C784); // 绿色
+        return const Color(0xFF81C784); // green
       case AttendanceStatus.late:
-        return const Color(0xFFFFD54F); // 黄色
+        return const Color(0xFFFFD54F); // yellow
       case AttendanceStatus.excused:
-        return const Color(0xFF64B5F6); // 蓝色
+        return const Color(0xFF64B5F6); // blue
       case AttendanceStatus.absent:
-        return const Color(0xFFEF5350); // 红色
+        return const Color(0xFFEF5350); // red
     }
   }
 

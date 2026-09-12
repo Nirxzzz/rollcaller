@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'attendence_page.dart';
 import 'random_call_page.dart';
 
@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,11 +28,11 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // 顶部标题栏
+              // Top title
               Container(
                 padding: EdgeInsets.all(12.w),
                 child: Text(
-                  KString.homeAppBarTitle,
+                  l10n.homeAppBarTitle,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(width: 8.w),
               Text(
-                KString.callFunctionSwitchButtonTitle, //'随机点名'
+                AppLocalizations.of(context).randomCallTab,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: _selectedIndex == 0
                       ? Theme.of(context).colorScheme.onPrimary
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(width: 8.w),
               Text(
-                KString.attendanceCallFunctionSwitchButtonTitle, //'签到点名'
+                AppLocalizations.of(context).attendanceTab,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: _selectedIndex == 1
                       ? Theme.of(context).colorScheme.onPrimary

@@ -1,0 +1,410 @@
+{
+  "@@locale": "en",
+  "appTitle": "Roll Call System",
+  "homeTitle": "Home",
+  "studentClassTitle": "Classes",
+  "studentTitle": "Students",
+  "recordsTitle": "Records",
+  "settingsTitle": "Settings",
+  "homeAppBarTitle": "Roll Call System",
+  "randomCallTab": "Random Call",
+  "attendanceTab": "Attendance",
+  "confirm": "OK",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "close": "Close",
+  "refresh": "Refresh",
+  "export": "Export",
+  "archive": "Archive",
+  "all": "All",
+  "yes": "Yes",
+  "no": "No",
+  "deleteSuccess": "Deleted",
+  "deleteFail": "Delete failed",
+  "addSuccess": "Added successfully",
+  "addFailed": "Add failed",
+  "updateSuccess": "Updated successfully",
+  "updateFailed": "Update failed",
+  "createSuccess": "Created successfully",
+  "createFailed": "Create failed",
+  "noData": "No data...",
+  "confirmDelete": "Confirm Delete",
+  "loadFailed": "Error: {error}",
+  "@loadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "valueDuplicated": "\"{value}\" is already in use",
+  "@valueDuplicated": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "notesLabel": "Notes: {notes}",
+  "@notesLabel": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "notesOptional": "Notes (optional)",
+  "@notesOptional": {},
+  "classLabel": "Class: {name}",
+  "@classLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "className": "Class",
+  "name": "Name",
+  "studentNumber": "Student No.",
+  "createTime": "Created",
+  "createdAtLabel": "Created: {dateTime}",
+  "@createdAtLabel": {
+    "placeholders": {
+      "dateTime": {
+        "type": "String"
+      }
+    }
+  },
+  "noStudent": "No students",
+  "noStudentNumber": "No student number",
+  "startCallButtonLabel": "Start",
+  "stopCallButtonLabel": "Stop",
+  "chooseACaller": "Caller",
+  "notChooseACaller": "No caller selected",
+  "callerNonRepeatable": "No repeat | {name}",
+  "@callerNonRepeatable": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "callerRepeatable": "{name}: repeatable",
+  "@callerRepeatable": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseChooseACaller": "Please select a caller first",
+  "editCaller": "Edit Caller",
+  "addCaller": "New Caller",
+  "forbitDeleteCallerInfo": "This caller has random call records and cannot be deleted. Please delete all of its records first.",
+  "confirmDeleteCallerContent": "Are you sure you want to delete the selected caller? This cannot be undone.",
+  "scoreValue": "{score} pts",
+  "@scoreValue": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "saveScore": "Save Score",
+  "alreadyPickedNoRepeat": "{name} (already picked)",
+  "@alreadyPickedNoRepeat": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "callCount": "Picked: {count}x",
+  "@callCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "averageScore": "Avg: {score}",
+  "@averageScore": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "studentList": "Students",
+  "pickedStudent": "Picked",
+  "notPickedStudent": "Not picked",
+  "searchStudent": "Search students",
+  "attendanceStatus": "Status",
+  "totalPeople": "Total: {count}",
+  "@totalPeople": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "peopleCount": "{count} students",
+  "@peopleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceStatistics": "Statistics",
+  "forbitDeleteAttendanceCallerInfo": "This caller has attendance records and cannot be deleted. Please delete all of its records first.",
+  "signInAll": "All present",
+  "signOutAll": "All absent",
+  "studentNumberLabel": "No. {number}",
+  "@studentNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPresent": "Present",
+  "statusLate": "Late",
+  "statusExcused": "Excused",
+  "statusAbsent": "Absent",
+  "studentClassAppBarTitle": "Classes",
+  "noStudentClass": "No classes yet",
+  "addStudentClass": "Add Class",
+  "editStudentClass": "Edit Class",
+  "studentClassCount": "Enrolled",
+  "studentCount": "Expected",
+  "teacher": "Teacher",
+  "deleteClassWarnning": "Are you sure you want to delete this class? This cannot be undone.",
+  "forbitDeleteClassWarnningDetail": "This class still contains students, random callers and attendance callers and cannot be deleted. Please remove all of them first.",
+  "classFull": "Class full",
+  "classNotFull": "Places available",
+  "classOverQuantity": "Over capacity",
+  "classNameRequiredLabel": "Class name (required)",
+  "studentQuantityRequiredLabel": "Student count (required)",
+  "teacherNameOptionalLabel": "Teacher name (optional)",
+  "classNameRequired": "Class name cannot be empty",
+  "studentQuantityRequired": "Student count cannot be empty",
+  "studentAppBarTitle": "Students",
+  "addStudent": "Add Student",
+  "editStudent": "Edit Student",
+  "noClassStudent": "No class",
+  "searchStudentNumberOrName": "Search by student no. or name...",
+  "confirmDeleteStudentContent": "Are you sure you want to delete this student? This cannot be undone.",
+  "confirmDeleteStudentWarnningDetail": "This student has random call or attendance records and cannot be deleted. Please delete all of the student's records first.",
+  "importStudentsSuccess": "Successfully imported {count} students",
+  "@importStudentsSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importStudentsError": "Failed to import students",
+  "pleaseGrantStoragePermission": "Please grant storage permission",
+  "templateCopied": "Template copied to: {path}",
+  "@templateCopied": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "studentDetailTitle": "Student Details",
+  "affiliatedClasses": "Classes",
+  "studentNumberField": "Student No.",
+  "studentNameField": "Student Name",
+  "studentNumberHint": "Enter student number (required)",
+  "studentNameHint": "Enter student name (required)",
+  "studentNumberRequired": "Student number cannot be empty",
+  "studentNameRequired": "Name cannot be empty",
+  "recordAppBarTitle": "Call Records",
+  "randomCallRecord": "Random Call Records",
+  "attendanceCallRecord": "Attendance Records",
+  "noRandomCallRecord": "No random call records",
+  "noAttendanceCallRecord": "No attendance records",
+  "tryAdjustFilter": "Try adjusting the filters",
+  "classRecordCount": "Class: {className} | Records: {count}",
+  "@classRecordCount": {
+    "placeholders": {
+      "className": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordCountLabel": "Records: {count}",
+  "@recordCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "archived": "Archived",
+  "unarchived": "Not archived",
+  "unknownStudent": "Unknown student",
+  "unknownStudentNumber": "Unknown no.",
+  "scoreLabel": "Score: {score}",
+  "@scoreLabel": {
+    "placeholders": {
+      "score": {
+        "type": "Object"
+      }
+    }
+  },
+  "timeLabel": "Time: {time}",
+  "@timeLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "filterCondition": "Filters",
+  "resetFilter": "Reset",
+  "randomCallerLabel": "Caller:",
+  "timeRangeLabel": "Time range:",
+  "startTime": "Start",
+  "endTime": "End",
+  "to": "to",
+  "archivedLabel": "Archived:",
+  "dateRangePickerTitle": "Select date range",
+  "editScore": "Edit Score",
+  "score": "Score",
+  "pleaseInputScore": "Please enter a score",
+  "pleaseInputValidScore": "Please enter a valid integer (1-10)",
+  "confirmDeleteRecordContent": "Are you sure you want to delete this call record? This cannot be undone.",
+  "confirmArchive": "Confirm Archive",
+  "confirmArchiveContent": "After archiving, this caller and its records can no longer be modified. Continue?",
+  "selectCallerToExport": "Select callers to export",
+  "pleaseSelectCallerToExport": "Select callers to export:",
+  "pleaseSelectAtLeastOneCaller": "Please select at least one caller",
+  "exportColumnOrder": "No.",
+  "exportColumnName": "Caller",
+  "exportColumnClassName": "Class",
+  "exportColumnStudentNumber": "Student No.",
+  "exportColumnStudentName": "Name",
+  "exportColumnScore": "Score",
+  "exportColumnAttendanceStatus": "Status",
+  "exportColumnTime": "Time",
+  "exportColumnRemark": "Notes",
+  "noExportableRecords": "No records to export",
+  "pleaseGrantStoragePermissionToExport": "Storage permission is required to export files",
+  "randomRecordExportFilePrefix": "Random_Call_Records_",
+  "attendanceRecordExportFilePrefix": "Attendance_Records_",
+  "exportSuccess": "Exported {count} records to: {path}",
+  "@exportSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "exportFailed": "Export failed: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "callerName": "Caller name",
+  "callerNameRequired": "Caller name cannot be empty",
+  "noClassCannotAddCaller": "No classes available. Please add a class first.",
+  "allowRepeatCalling": "Allow repeat calling",
+  "repeatableYes": "Repeatable: Yes",
+  "repeatableNo": "Repeatable: No",
+  "webDavConfig": "WebDAV Configuration",
+  "webDavServerUrl": "WebDAV server URL",
+  "username": "Username",
+  "password": "Password",
+  "connectionSuccess": "Connection successful",
+  "connectionFailed": "Connection failed: {error}",
+  "@connectionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "testConnection": "Test Connection",
+  "configSaved": "Configuration saved",
+  "saveConfig": "Save Configuration",
+  "backupSettings": "Backup Settings",
+  "autoBackup": "Auto backup",
+  "autoBackupTip": "When enabled, data is backed up automatically whenever the app goes to the background",
+  "manualBackup": "Manual Backup",
+  "selectBackupToRestoreFirst": "Please select a backup to restore",
+  "restoreData": "Restore",
+  "backupHistory": "Backup History",
+  "confirmDeleteBackupContent": "Are you sure you want to delete this backup? This cannot be undone.",
+  "cannotDeleteSelectedBackup": "The currently selected backup cannot be deleted",
+  "deleteFileSuccess": "Backup deleted",
+  "deleteFileFailed": "Failed to delete backup: {error}",
+  "@deleteFileFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noBackupHistory": "No backup history",
+  "backupSuccess": "Backup successful",
+  "backupFailed": "Backup failed",
+  "backupFailedError": "Backup failed: {error}",
+  "@backupFailedError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "restoreSuccess": "Restore successful",
+  "restoreFailedError": "Restore failed: {error}",
+  "@restoreFailedError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "fetchWebDavConfigFailed": "Failed to load WebDAV configuration: {error}",
+  "@fetchWebDavConfigFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "backupTypeAuto": "Auto",
+  "backupTypeManual": "Manual",
+  "lastBackupSuccess": "Last backup succeeded",
+  "lastBackupFailed": "Last backup failed",
+  "themeSettings": "Theme Settings",
+  "themeModeLabel": "Theme mode:",
+  "followSystem": "Follow system",
+  "light": "Light",
+  "dark": "Dark",
+  "themeStyleLabel": "Color scheme:",
+  "themeColorRed": "Red",
+  "themeColorOrange": "Orange",
+  "themeColorYellow": "Yellow",
+  "themeColorGreen": "Green",
+  "themeColorBlue": "Blue",
+  "themeColorIndigo": "Indigo",
+  "themeColorPurple": "Purple",
+  "themeColorCustom": "Custom",
+  "customTheme": "Custom theme"
+}

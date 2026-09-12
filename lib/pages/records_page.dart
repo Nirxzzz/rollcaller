@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'attendance_call_records_page.dart';
 import 'random_call_records_page.dart';
 
@@ -18,16 +18,17 @@ class _RecordState extends State<RecordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 顶部标题栏
+            // Top title
             Container(
               padding: EdgeInsets.all(12.w),
               child: Text(
-                KString.recordAppBarTitle, // '点名记录管理'
+                l10n.recordAppBarTitle,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
@@ -80,10 +81,15 @@ class _RecordState extends State<RecordPage> {
                 color: _selectedIndex == 0 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
               ),
               SizedBox(width: 8.0.w),
-              Text(
-                KString.randomCallRecord, // '随机点名记录'
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _selectedIndex == 0 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppLocalizations.of(context).randomCallRecord,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: _selectedIndex == 0 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -124,10 +130,15 @@ class _RecordState extends State<RecordPage> {
                                 color: _selectedIndex == 1 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
               ),
               SizedBox(width: 8.0.w),
-              Text(
-                KString.attendanceCallRecord, // '签到点名记录'
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _selectedIndex == 1 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppLocalizations.of(context).attendanceCallRecord,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: _selectedIndex == 1 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ),
             ],

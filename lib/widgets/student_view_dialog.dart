@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/student_class_model.dart';
 import '../models/student_model.dart';
 import '../utils/student_class_dao.dart';
@@ -40,9 +41,10 @@ class _StudentViewDialogState extends State<StudentViewDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // 拿到学生所在的所有班级
+    final l10n = AppLocalizations.of(context);
+    // Load all classes the student belongs to
     return AlertDialog(
-      title: const Text('学生信息详情'),
+      title: Text(l10n.studentDetailTitle),
       content: SingleChildScrollView(
         child: FutureBuilder(future: _getStudentAllClassesFuture, builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -50,11 +52,11 @@ class _StudentViewDialogState extends State<StudentViewDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildInfoRow('姓名', widget.student.studentName),
-                _buildInfoRow('学号', widget.student.studentNumber),
-                _buildInfoRow('班级', snapshot.data!.map((e) => e.className).join(', ')),
+                _buildInfoRow(l10n.name, widget.student.studentName),
+                _buildInfoRow(l10n.studentNumber, widget.student.studentNumber),
+                _buildInfoRow(l10n.className, snapshot.data!.map((e) => e.className).join(', ')),
                 _buildInfoRow(
-                  '创建时间',
+                  l10n.createTime,
                   '${widget.student.created.year}-${widget.student.created.month.toString().padLeft(2, '0')}-${widget.student.created.day.toString().padLeft(2, '0')}',
                 ),
               ],
@@ -70,7 +72,7 @@ class _StudentViewDialogState extends State<StudentViewDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('关闭'),
+          child: Text(l10n.close),
         ),
       ],
     );

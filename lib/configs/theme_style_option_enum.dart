@@ -1,31 +1,33 @@
-// 主题风格枚举
+// Theme style option enum
 import 'dart:ui' show Color;
 
 import 'package:flutter/material.dart' show Colors, ThemeMode;
+
+import '../l10n/generated/app_localizations.dart';
 
 enum ThemeStyleOption { red, orange, yellow, green, blue, indigo, purple, diy }
 
 extension ThemeStyleOptionExtension on ThemeStyleOption {
 
   static Color pickedColor = Colors.white;
-  String get name {
+  String displayName(AppLocalizations l10n) {
     switch (this) {
       case ThemeStyleOption.red:
-        return '红色';
+        return l10n.themeColorRed;
       case ThemeStyleOption.orange:
-        return '橙色';
+        return l10n.themeColorOrange;
       case ThemeStyleOption.yellow:
-        return '黄色';
+        return l10n.themeColorYellow;
       case ThemeStyleOption.green:
-        return '绿色';
+        return l10n.themeColorGreen;
       case ThemeStyleOption.blue:
-        return '蓝色';
+        return l10n.themeColorBlue;
       case ThemeStyleOption.indigo:
-        return '青色';
+        return l10n.themeColorIndigo;
       case ThemeStyleOption.purple:
-        return '紫色';
+        return l10n.themeColorPurple;
       case ThemeStyleOption.diy:
-        return '自定义';
+        return l10n.themeColorCustom;
     }
   }
 

@@ -15,6 +15,7 @@ import 'package:webdav_client/webdav_client.dart' show Client, newClient;
 import '../configs/back_up_type.dart';
 import '../configs/strings.dart';
 import '../configs/theme_style_option_enum.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/back_up_model.dart';
 import '../providers/them_switcher_provider.dart';
 import '../utils/attendance_call_record_dao.dart';
@@ -137,6 +138,7 @@ class _SettingsState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     _selectedThemeStyle ??= context.read<ThemeSwitcherProvider>().themeStyle;
     _selectedThemeMode ??= context.read<ThemeSwitcherProvider>().themeMode;
     return Scaffold(
@@ -148,7 +150,7 @@ class _SettingsState extends State<SettingsPage> {
             Container(
               padding: EdgeInsets.all(12.w),
               child: Text(
-                '设置',
+                l10n.settingsTitle,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
@@ -200,6 +202,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Visibility _buildLastBackUpStatus() {
+    final l10n = AppLocalizations.of(context);
     // 备份状态显示
     return Visibility(
       visible: _lastBackUpModel != null,
@@ -226,7 +229,9 @@ class _SettingsState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _lastBackUpModel?.result == true ? '上次备份成功' : '上次备份失败',
+                  _lastBackUpModel?.result == true
+                      ? l10n.lastBackupSuccess
+                      : l10n.lastBackupFailed,
                   style: TextStyle(
                     color: _lastBackUpModel?.result == true
                         ? Colors.green
@@ -251,12 +256,13 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Column _buildWebDavInfo() {
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 8.h),
         // WebDAV配置标题
-        Text('WebDAV配置', style: Theme.of(context).textTheme.headlineMedium),
+        Text(l10n.webDavConfig, style: Theme.of(context).textTheme.headlineMedium),
         SizedBox(height: 4.h),
         // 输入框容器
         Container(
@@ -287,7 +293,7 @@ class _SettingsState extends State<SettingsPage> {
                     child: TextField(
                       controller: _webDavServerController,
                       decoration: InputDecoration(
-                        labelText: 'WebDAV服务器地址',
+                        labelText: l10n.webDavServerUrl,
                         labelStyle: Theme.of(context).textTheme.labelLarge,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0.r),
@@ -324,7 +330,7 @@ class _SettingsState extends State<SettingsPage> {
               TextField(
                 controller: _webDavUsernameController,
                 decoration: InputDecoration(
-                  labelText: '用户名',
+                  labelText: l10n.username,
                   labelStyle: Theme.of(context).textTheme.labelLarge,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0.r),
@@ -358,7 +364,7 @@ class _SettingsState extends State<SettingsPage> {
                 controller: _webDavPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: '密码',
+                  labelText: l10n.password,
                   labelStyle: Theme.of(context).textTheme.labelLarge,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0.r),
@@ -428,7 +434,7 @@ class _SettingsState extends State<SettingsPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  '连接成功',
+                                  l10n.connectionSuccess,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
@@ -453,7 +459,7 @@ class _SettingsState extends State<SettingsPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  '连接失败：$e',
+                                  l10n.connectionFailed('$e'),
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
@@ -494,7 +500,7 @@ class _SettingsState extends State<SettingsPage> {
                           ),
                           SizedBox(width: 8.0.w),
                           Text(
-                            '测试连接',
+                            l10n.testConnection,
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(
                                   color: Theme.of(
@@ -535,7 +541,7 @@ class _SettingsState extends State<SettingsPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                '配置已保存',
+                                l10n.configSaved,
                                 style: TextStyle(
                                   color: Theme.of(
                                     context,
@@ -572,7 +578,7 @@ class _SettingsState extends State<SettingsPage> {
                           ),
                           SizedBox(width: 8.0.w),
                           Text(
-                            '保存配置',
+                            l10n.saveConfig,
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(
                                   color: Theme.of(
@@ -596,6 +602,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Container _buildBackUpSetting() {
+    final l10n = AppLocalizations.of(context);
     // 备份设置
     return Container(
       padding: EdgeInsets.all(8.0.w),
@@ -616,7 +623,7 @@ class _SettingsState extends State<SettingsPage> {
         children: [
           // 备份设置标题
           Text(
-            '备份设置',
+            l10n.backupSettings,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
@@ -628,7 +635,7 @@ class _SettingsState extends State<SettingsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '自动备份',
+                l10n.autoBackup,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -651,7 +658,7 @@ class _SettingsState extends State<SettingsPage> {
           SizedBox(height: 4.r),
           // 提示语句
           Text(
-            '若打开自动备份则每次应用置于后台时自动备份',
+            l10n.autoBackupTip,
             style: Theme.of(context).textTheme.labelSmall,
           ),
         ],
@@ -660,6 +667,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Column _buildBackUpButtons() {
+    final l10n = AppLocalizations.of(context);
     return Column(
       children: [
         // 备份和恢复按钮
@@ -691,7 +699,7 @@ class _SettingsState extends State<SettingsPage> {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      '手动备份',
+                      l10n.manualBackup,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
@@ -713,7 +721,7 @@ class _SettingsState extends State<SettingsPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          '请先选择要恢复的备份',
+                          l10n.selectBackupToRestoreFirst,
                           style: TextStyle(
                             color: Theme.of(
                               context,
@@ -747,7 +755,7 @@ class _SettingsState extends State<SettingsPage> {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      '恢复数据',
+                      l10n.restoreData,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
@@ -772,12 +780,12 @@ class _SettingsState extends State<SettingsPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '备份历史',
+              l10n.backupHistory,
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             TextButton.icon(
-              label: Text('刷新'),
+              label: Text(l10n.refresh),
               icon: Icon(Icons.refresh),
               onPressed: () {
                 setState(() {
@@ -798,6 +806,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Column _buildBackUpHistory() {
+    final l10n = AppLocalizations.of(context);
     var backUpModels = _allBackUpModels.values.toList();
     backUpModels.sort((a, b) => b.dateTimeKey.compareTo(a.dateTimeKey));
     return Column(
@@ -850,13 +859,15 @@ class _SettingsState extends State<SettingsPage> {
                                 return await showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('确认删除'),
-                                    content: const Text('确定要删除此备份吗？此操作不可撤销。'),
+                                    title: Text(l10n.confirmDelete),
+                                    content: Text(
+                                      l10n.confirmDeleteBackupContent,
+                                    ),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.of(context).pop(false),
-                                        child: const Text('取消'),
+                                        child: Text(l10n.cancel),
                                       ),
                                       TextButton(
                                         onPressed: () {
@@ -867,8 +878,10 @@ class _SettingsState extends State<SettingsPage> {
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('当前选中备份不能删除'),
+                                              SnackBar(
+                                                content: Text(
+                                                  l10n.cannotDeleteSelectedBackup,
+                                                ),
                                               ),
                                             );
                                             return;
@@ -893,8 +906,10 @@ class _SettingsState extends State<SettingsPage> {
                                               ScaffoldMessenger.of(
                                                 context,
                                               ).showSnackBar(
-                                                const SnackBar(
-                                                  content: Text('删除文件成功'),
+                                                SnackBar(
+                                                  content: Text(
+                                                    l10n.deleteFileSuccess,
+                                                  ),
                                                 ),
                                               );
                                             } catch (e) {
@@ -904,14 +919,16 @@ class _SettingsState extends State<SettingsPage> {
                                                 context,
                                               ).showSnackBar(
                                                 SnackBar(
-                                                  content: Text('删除文件失败：$e'),
+                                                  content: Text(
+                                                    l10n.deleteFileFailed('$e'),
+                                                  ),
                                                 ),
                                               );
                                               return;
                                             }
                                           }
                                         },
-                                        child: const Text('确认'),
+                                        child: Text(l10n.confirm),
                                       ),
                                     ],
                                   ),
@@ -932,7 +949,9 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                               ),
                               subtitle: Text(
-                                backUpModel.type.typeText,
+                                backUpModel.type == BackUpType.auto
+                                    ? l10n.backupTypeAuto
+                                    : l10n.backupTypeManual,
                                 style: Theme.of(context).textTheme.labelMedium
                                     ?.copyWith(
                                       color: Theme.of(
@@ -946,13 +965,14 @@ class _SettingsState extends State<SettingsPage> {
                         .toList(),
                   ),
                 )
-              : const Center(child: Text('暂无备份历史')),
+              : Center(child: Text(l10n.noBackupHistory)),
         ),
       ],
     );
   }
 
   Future<void> _backupData({BackUpType backUpType = BackUpType.manual}) async {
+    final l10n = AppLocalizations.of(context);
     // ! 1、获取所有表格数据
     final backupData = await _exportAllTables();
     // ! 2、转换为JSON字符串
@@ -964,7 +984,7 @@ class _SettingsState extends State<SettingsPage> {
     final timeKey =
         '${t.year}${t.month.toString().padLeft(2, '0')}${t.day.toString().padLeft(2, '0')}${t.hour.toString().padLeft(2, '0')}${t.minute.toString().padLeft(2, '0')}${t.second.toString().padLeft(2, '0')}';
     final fileName =
-        '${KString.backupFileName}_${backUpType.typeText}_$timeKey.json';
+        '${KString.backupFileName}_${backUpType.fileToken}_$timeKey.json';
     final tempFilePath = join(tempDir.path, fileName);
     final tempFile = File(tempFilePath);
     await tempFile.writeAsString(jsonString);
@@ -994,7 +1014,7 @@ class _SettingsState extends State<SettingsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '备份失败：$e',
+              l10n.backupFailedError('$e'),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -1025,7 +1045,7 @@ class _SettingsState extends State<SettingsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '备份成功',
+              l10n.backupSuccess,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -1041,7 +1061,7 @@ class _SettingsState extends State<SettingsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '备份失败',
+              l10n.backupFailed,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -1078,6 +1098,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Future<void> _restoreFromWebDav(BackUpModel backUpModel) async {
+    final l10n = AppLocalizations.of(context);
     try {
       // 1、确定文件路径
       final filePath = join(
@@ -1141,7 +1162,7 @@ class _SettingsState extends State<SettingsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                '恢复成功',
+                l10n.restoreSuccess,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onInverseSurface,
                 ),
@@ -1158,7 +1179,7 @@ class _SettingsState extends State<SettingsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '恢复失败：$e',
+              l10n.restoreFailedError('$e'),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),
@@ -1174,6 +1195,7 @@ class _SettingsState extends State<SettingsPage> {
   // 主题设置
   // 主题控制组件
   Widget _buildThemeSelectWidget() {
+    final l10n = AppLocalizations.of(context);
     return GestureDetector(
       onTap: () =>
           setState(() => _isThemeSettingsExpanded = !_isThemeSettingsExpanded),
@@ -1205,7 +1227,7 @@ class _SettingsState extends State<SettingsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // 顶部标题和管理链接
-                  Text('主题设置', style: Theme.of(context).textTheme.titleLarge),
+                  Text(l10n.themeSettings, style: Theme.of(context).textTheme.titleLarge),
                   Icon(
                     _isThemeSettingsExpanded
                         ? Icons.expand_less
@@ -1225,7 +1247,7 @@ class _SettingsState extends State<SettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '主题模式:',
+                      l10n.themeModeLabel,
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -1254,7 +1276,7 @@ class _SettingsState extends State<SettingsPage> {
                                 ),
                               ),
                               child: Text(
-                                '跟随系统',
+                                l10n.followSystem,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
@@ -1296,7 +1318,7 @@ class _SettingsState extends State<SettingsPage> {
                                 ),
                               ),
                               child: Text(
-                                '浅色',
+                                l10n.light,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
@@ -1338,7 +1360,7 @@ class _SettingsState extends State<SettingsPage> {
                                 ),
                               ),
                               child: Text(
-                                '深色',
+                                l10n.dark,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
@@ -1362,7 +1384,7 @@ class _SettingsState extends State<SettingsPage> {
 
                     // 主题风格
                     Text(
-                      '主题风格:',
+                      l10n.themeStyleLabel,
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -1400,7 +1422,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '红色',
+                                    l10n.themeColorRed,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1449,7 +1471,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '橙色',
+                                    l10n.themeColorOrange,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1498,7 +1520,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '黄色',
+                                    l10n.themeColorYellow,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1547,7 +1569,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '绿色',
+                                    l10n.themeColorGreen,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1598,7 +1620,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '蓝色',
+                                    l10n.themeColorBlue,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1646,7 +1668,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '青色',
+                                    l10n.themeColorIndigo,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1694,7 +1716,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '紫色',
+                                    l10n.themeColorPurple,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1741,7 +1763,7 @@ class _SettingsState extends State<SettingsPage> {
                                     ),
                                   ),
                                   child: Text(
-                                    '自定义',
+                                    l10n.themeColorCustom,
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
@@ -1807,12 +1829,13 @@ class _SettingsState extends State<SettingsPage> {
 
   // 切换主题风格
   Future<void> _changeThemeStyle(ThemeStyleOption style) async {
+    final l10n = AppLocalizations.of(context);
     Color materialPickerColor = _selectedThemeStyle!.color;
     if (style == ThemeStyleOption.diy) {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('自定义主题'),
+          title: Text(l10n.customTheme),
           content: SingleChildScrollView(
             child: MaterialPicker(
               pickerColor: _selectedThemeStyle!.color,
@@ -1826,7 +1849,7 @@ class _SettingsState extends State<SettingsPage> {
                 Navigator.of(context).pop();
                 ThemeStyleOptionExtension.pickedColor = materialPickerColor;
               },
-              child: Text('确定'),
+              child: Text(l10n.confirm),
             ),
           ],
         ),
@@ -1857,6 +1880,7 @@ class _SettingsState extends State<SettingsPage> {
   }
 
   Future<void> _refreshBackUpData() async {
+    final l10n = AppLocalizations.of(context);
     try {
       await _client!.ping();
       // 获取历史备份数据，从服务器获取数据
@@ -1905,7 +1929,7 @@ class _SettingsState extends State<SettingsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '获取WebDav配置失败：$e',
+              l10n.fetchWebDavConfigFailed('$e'),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onInverseSurface,
               ),

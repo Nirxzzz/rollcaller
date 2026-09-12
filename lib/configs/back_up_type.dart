@@ -3,15 +3,16 @@ enum BackUpType {
   manual,
 }
 
-// 签到状态扩展
+// Backup type extension
 extension BackUpTypeExtension on BackUpType {
-  String get typeText {
+  // Stable token embedded in backup file names (must never be localized).
+  String get fileToken {
     switch (this) {
       case BackUpType.auto:
-        return '自动备份';
+        return 'auto';
       case BackUpType.manual:
-        return '手动备份';
-      }
+        return 'manual';
+    }
   }
 
   int get toInt {
@@ -29,19 +30,21 @@ extension BackUpTypeExtension on BackUpType {
         return BackUpType.auto;
       case 2:
         return BackUpType.manual;
-      
+
       default:
         return BackUpType.auto;
     }
   }
 
+  // Parses the type token from a backup file name. Accepts the current
+  // ASCII tokens and the legacy Chinese tokens used by older backups.
   static BackUpType fromString(String value) {
     switch (value) {
+      case 'manual':
       case '手动备份':
         return BackUpType.manual;
+      case 'auto':
       case '自动备份':
-        return BackUpType.auto;
-      
       default:
         return BackUpType.auto;
     }

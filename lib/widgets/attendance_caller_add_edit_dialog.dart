@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/attendance_caller_model.dart';
 import '../models/student_class_model.dart';
 import '../utils/attendance_caller_dao.dart';
@@ -8,11 +9,13 @@ import '../utils/student_class_dao.dart';
 class AttendanceCallerAddEditDialog extends StatefulWidget {
   final AttendanceCallerModel attendanceCaller;
   final String title;
+  final bool isAdd;
 
   const AttendanceCallerAddEditDialog({
     super.key,
     required this.attendanceCaller,
     required this.title,
+    required this.isAdd,
   });
 
   @override
@@ -35,7 +38,7 @@ class _AttendanceCallerAddEditDialogState
   initState() {
     super.initState();
     _selectedStudentClassId = widget.attendanceCaller.classId;
-    _isAdd = widget.title == '新增点名器';
+    _isAdd = widget.isAdd;
     _attendanceCallerNameController.text =
         widget.attendanceCaller.attendanceCallerName;
     _notesController.text = widget.attendanceCaller.notes;
@@ -64,6 +67,7 @@ class _AttendanceCallerAddEditDialogState
     return FutureBuilder<Map<int, StudentClassModel>>(
       future: _getAllStudentClassesMap(),
       builder: (context, snapshot) {
+        final l10n = AppLocalizations.of(context);
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -83,7 +87,7 @@ class _AttendanceCallerAddEditDialogState
                     shrinkWrap: true,
                     children: [
                       _buildAttendanceCallerNameField(),
-                      _buildNotesField('备注（选填）'),
+                      _buildNotesField(l10n.notesOptional),
                       _buildClassIdField(),
                     ],
                   ),
@@ -92,7 +96,7 @@ class _AttendanceCallerAddEditDialogState
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('取消'),
+                  child: Text(l10n.cancel),
                 ),
                 TextButton(
                   onPressed: () {
@@ -102,7 +106,7 @@ class _AttendanceCallerAddEditDialogState
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              '暂无班级，无法添加点名器，请先添加班级',
+                              l10n.noClassCannotAddCaller,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onInverseSurface,
                               ),
@@ -117,7 +121,7 @@ class _AttendanceCallerAddEditDialogState
                     }
                     _saveAttendanceCaller(context);
                   },
-                  child: const Text('保存'),
+                  child: Text(l10n.save),
                 ),
               ],
             );
@@ -129,11 +133,12 @@ class _AttendanceCallerAddEditDialogState
   }
 
   TextFormField _buildAttendanceCallerNameField() {
+    final l10n = AppLocalizations.of(context);
     bool isAttendanceCallerNameUnique = true;
 
     return TextFormField(
       controller: _attendanceCallerNameController,
-      decoration: const InputDecoration(labelText: '点名器名称'),
+      decoration: InputDecoration(labelText: l10n.callerName),
       autovalidateMode: AutovalidateMode.onUnfocus,
       onChanged: (value) {
         WidgetsFlutterBinding.ensureInitialized(); // 确保初始化Flutter绑定。对于插件很重要。
@@ -154,10 +159,10 @@ class _AttendanceCallerAddEditDialogState
       },
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return '点名器名称不能为空';
+          return l10n.callerNameRequired;
         }
         if (!isAttendanceCallerNameUnique) {
-          return '$value重复使用';
+          return l10n.valueDuplicated(value);
         }
         return null;
       },
@@ -172,8 +177,9 @@ class _AttendanceCallerAddEditDialogState
   }
 
   Widget _buildClassIdField() {
+    final l10n = AppLocalizations.of(context);
     if (_allStudentClassesMap!.isEmpty) {
-      return const Text('暂无班级，无法添加点名器，请先添加班级');
+      return Text(l10n.noClassCannotAddCaller);
     }
 
     return RadioGroup<int>(
@@ -206,6 +212,7 @@ class _AttendanceCallerAddEditDialogState
   }
 
   void _saveAttendanceCaller(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if ((_formKey.currentState as FormState).validate()) {
       widget.attendanceCaller.attendanceCallerName =
           _attendanceCallerNameController.text;
@@ -224,7 +231,7 @@ class _AttendanceCallerAddEditDialogState
                   ).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '添加成功',
+                        l10n.addSuccess,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),
@@ -241,7 +248,7 @@ class _AttendanceCallerAddEditDialogState
                   ).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '添加失败',
+                        l10n.addFailed,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),
@@ -266,7 +273,7 @@ class _AttendanceCallerAddEditDialogState
                   ).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '更新成功',
+                        l10n.updateSuccess,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),
@@ -283,7 +290,7 @@ class _AttendanceCallerAddEditDialogState
                   ).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '更新失败',
+                        l10n.updateFailed,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),

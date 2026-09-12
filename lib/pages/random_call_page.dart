@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/random_call_record.dart';
 import '../models/random_caller_group.dart';
 import '../models/random_caller_model.dart';
@@ -176,10 +176,11 @@ class _RandomCallPageState extends State<RandomCallPage>
     return FutureBuilder(
       future: _randomCallerFuture,
       builder: (context, snapshot) {
+        final l10n = AppLocalizations.of(context);
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('${KString.errorPrefix}${snapshot.error}'));
+          return Center(child: Text(l10n.loadFailed('${snapshot.error}')));
         } else {
           _randomCallerGroup = snapshot.data;
           return Expanded(
@@ -202,6 +203,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   Column _buildCallerCallWidget() {
+    final l10n = AppLocalizations.of(context);
     return Column(
       children: [
         // 学生抽取卡片
@@ -216,7 +218,7 @@ class _RandomCallPageState extends State<RandomCallPage>
               children: [
                 // 学生姓名显示
                 Text(
-                  _currentStudent?.studentName ?? KString.noStudent, //'没有学生'
+                  _currentStudent?.studentName ?? l10n.noStudent,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
 
@@ -233,10 +235,9 @@ class _RandomCallPageState extends State<RandomCallPage>
                   },
                   child: Text(
                     _currentStudent == null
-                        ? KString
-                              .noStudent //'没有学生'
+                        ? l10n.noStudent
                         : _currentStudent?.studentNumber ??
-                              KString.noStudentNumber, //'没有学号'
+                              l10n.noStudentNumber,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
@@ -274,8 +275,8 @@ class _RandomCallPageState extends State<RandomCallPage>
                         SizedBox(width: 8.0.w),
                         Text(
                           _isPicking
-                              ? KString.stopCallButtonLabel // '停止抽取'
-                              : KString.startCallButtonLabel, // '开始随机抽取'
+                              ? l10n.stopCallButtonLabel
+                              : l10n.startCallButtonLabel,
                         ),
                       ],
                     ),
@@ -309,6 +310,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   GestureDetector _buildRandomCallerInfoWidget() {
+    final l10n = AppLocalizations.of(context);
     return GestureDetector(
       onTap: () {
         // 点击显示/折叠点名器信息区域
@@ -343,7 +345,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                   Expanded(child: Row(
                     children: [
                       Text(
-                        KString.chooseACaller, // '选择点名器'
+                        l10n.chooseACaller,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
@@ -351,7 +353,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                       SizedBox(width: 24.w,),
                       Expanded(
                         child:Text(
-                        _randomCallerGroup == null ? KString.notChooseACaller : (_randomCallerGroup!.randomCallerModel.isDuplicate == 0 ? '${KString.notDuplicatePrefix}${_randomCallerGroup!.randomCallerModel.randomCallerName}' : '${_randomCallerGroup!.randomCallerModel.randomCallerName}${KString.duplicateSuffix}'),
+                        _randomCallerGroup == null ? l10n.notChooseACaller : (_randomCallerGroup!.randomCallerModel.isDuplicate == 0 ? l10n.callerNonRepeatable(_randomCallerGroup!.randomCallerModel.randomCallerName) : l10n.callerRepeatable(_randomCallerGroup!.randomCallerModel.randomCallerName)),
                         style: Theme.of(context).textTheme.labelMedium,
                         overflow: TextOverflow.ellipsis,
                       )
@@ -403,6 +405,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   IconButton _buildViewIconButton() {
+    final l10n = AppLocalizations.of(context);
     return IconButton(
       onPressed: () {
         // 查看点名器功能
@@ -418,7 +421,7 @@ class _RandomCallPageState extends State<RandomCallPage>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  KString.pleaseChooseACaller, // '请先选择点名器'
+                  l10n.pleaseChooseACaller,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -438,6 +441,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   IconButton _buildEditIconButton() {
+    final l10n = AppLocalizations.of(context);
     return IconButton(
       onPressed: () {
         // 编辑点名器功能
@@ -445,7 +449,8 @@ class _RandomCallPageState extends State<RandomCallPage>
           showDialog(
             context: context,
             builder: (context) => RandomCallerAddEditDialog(
-              title: KString.editCaller, // '编辑点名器'
+              title: l10n.editCaller,
+              isAdd: false,
               randomCaller: _allRandomCallersMap[_selectedCallerId!]!,
             ),
           ).then((value) {
@@ -459,7 +464,7 @@ class _RandomCallPageState extends State<RandomCallPage>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  KString.pleaseChooseACaller, // '请先选择点名器'
+                  l10n.pleaseChooseACaller,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -476,13 +481,15 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   IconButton _buildAddIconButton() {
+    final l10n = AppLocalizations.of(context);
     return IconButton(
       onPressed: () => {
         // 新增点名器功能
         showDialog(
           context: context,
           builder: (context) => RandomCallerAddEditDialog(
-            title: KString.addCaller, // '新增点名器'
+            title: l10n.addCaller,
+            isAdd: true,
             randomCaller: RandomCallerModel(
               classId: -1,
               randomCallerName: '',
@@ -506,6 +513,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   IconButton _buildDeleteIconButton() {
     return IconButton(
       onPressed: () async {
+        final l10n = AppLocalizations.of(context);
         // 校验是否有关联的随机点名记录
         if (_selectedCallerId != null) {
           // 校验是否有关联的随机点名记录
@@ -517,7 +525,7 @@ class _RandomCallPageState extends State<RandomCallPage>
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    KString.forbitDeleteCallerInfo, // '该点名器下有随机点名记录，无法删除。请先删除该点名器下的所有随机点名记录。'
+                    l10n.forbitDeleteCallerInfo,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onInverseSurface,
                     ),
@@ -534,12 +542,12 @@ class _RandomCallPageState extends State<RandomCallPage>
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text(KString.confirmDeleteCallerTitle), // '确认删除'
-                  content: Text(KString.confirmDeleteCallerRecordContent), // '确定要删除这条点名记录吗？此操作不可恢复。'
+                  title: Text(l10n.confirmDelete),
+                  content: Text(l10n.confirmDeleteCallerContent),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text(KString.cancel), // '取消'
+                      child: Text(l10n.cancel),
                     ),
                     TextButton(
                       onPressed: () async {
@@ -555,7 +563,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        KString.deleteSuccess, // '删除成功'
+                                        l10n.deleteSuccess,
                                         style: TextStyle(
                                           color: Theme.of(
                                             context,
@@ -574,7 +582,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        KString.deleteFail, // '删除失败'
+                                        l10n.deleteFail,
                                         style: TextStyle(
                                           color: Theme.of(
                                             context,
@@ -591,7 +599,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                               }
                             });
                       },
-                      child: Text(KString.delete), // '删除'
+                      child: Text(l10n.delete),
                     ),
                   ],
                 );
@@ -603,7 +611,7 @@ class _RandomCallPageState extends State<RandomCallPage>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  KString.pleaseChooseACaller, // '请先选择点名器'
+                  l10n.pleaseChooseACaller,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onInverseSurface,
                   ),
@@ -668,6 +676,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   Padding _buildStudentScoreWidget() {
+    final l10n = AppLocalizations.of(context);
     // 评分组件 - 一直显示
     return Padding(
       padding: EdgeInsets.only(top: 8.0.h),
@@ -687,11 +696,11 @@ class _RandomCallPageState extends State<RandomCallPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        KString.minScore, // '1分'
+                        l10n.scoreValue(1),
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       Text(
-                        KString.maxScore, // '10分'
+                        l10n.scoreValue(10),
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],
@@ -702,7 +711,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                     min: 1,
                     max: 10,
                     divisions: 9,
-                    label: '$_score${KString.scoreSuffix}', // '分'
+                    label: l10n.scoreValue(_score),
                     activeColor: Theme.of(context).colorScheme.secondary,
                     inactiveColor: Theme.of(context).colorScheme.onSecondary,
                     onChanged: (value) {
@@ -713,7 +722,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                   ),
                   SizedBox(height: 2.0.h),
                   Text(
-                    '$_score${KString.scoreSuffix}', // '分'
+                    l10n.scoreValue(_score),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
@@ -751,7 +760,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                             24.0,
                       ),
                       SizedBox(width: 8.0.w),
-                      Text(KString.saveScore), // '保存评分'
+                      Text(l10n.saveScore),
                     ],
                   ),
                 ),
@@ -809,8 +818,9 @@ class _RandomCallPageState extends State<RandomCallPage>
 
   // 构建学生组列表
   Widget _buildStudentGroup({required bool isPickedGroup}) {
+    final l10n = AppLocalizations.of(context);
     if (_randomCallerGroup == null || _randomCallerGroup!.students.isEmpty) {
-      return Text(KString.noStudent, style: Theme.of(context).textTheme.headlineLarge);
+      return Text(l10n.noStudent, style: Theme.of(context).textTheme.headlineLarge);
     }
     List<Map<StudentModel, List<RandomCallRecordModel>>> studentRecords = [];
     for (StudentModel student in _randomCallerGroup!.students.values) {
@@ -858,7 +868,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '${studentRecord.keys.first.studentName}${KString.noDoubleCalling}', // '已抽取，不可重复选择'
+                        l10n.alreadyPickedNoRepeat(studentRecord.keys.first.studentName),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onInverseSurface,
                         ),
@@ -922,7 +932,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '${KString.callPrefix}:${studentRecord.values.first.length}次', // '抽取: '
+                          l10n.callCount(studentRecord.values.first.length),
                           style: studentRecord.values.first.isNotEmpty
                               ? Theme.of(
                                   context,
@@ -937,7 +947,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                         ),
                         const SizedBox(height: 4.0),
                         Text(
-                          '${KString.averageScorePrefix}${average > 0 ? average.toStringAsFixed(1) : '—'}',
+                          l10n.averageScore(average > 0 ? average.toStringAsFixed(1) : '—'),
                           style: average > 0
                               ? Theme.of(
                                   context,
@@ -963,6 +973,7 @@ class _RandomCallPageState extends State<RandomCallPage>
   }
 
   Padding _buildStudentCardsWidget() {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(top: 8.0.h),
       child: Card(
@@ -975,7 +986,7 @@ class _RandomCallPageState extends State<RandomCallPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(KString.studentList, style: Theme.of(context).textTheme.headlineMedium), //  '学生列表'
+              Text(l10n.studentList, style: Theme.of(context).textTheme.headlineMedium),
               SizedBox(height: 8.0.h),
 
               // 已抽取学生组
@@ -989,7 +1000,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      KString.pickedStudent, // '已抽取学生'
+                      l10n.pickedStudent,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.tertiary,
                       ),
@@ -1027,7 +1038,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      KString.notPickedStudent, // '未抽取学生'
+                      l10n.notPickedStudent,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.tertiary,
                       ),

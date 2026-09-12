@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../configs/strings.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'home_page.dart';
 import 'records_page.dart';
 import 'settings_page.dart';
@@ -11,28 +11,6 @@ import 'student_page.dart';
 class IndexPage extends StatelessWidget {
   const IndexPage({super.key});
 
-  static const List<BottomNavigationBarItem> bottomTabs = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: KString.homeTitle, // 首页
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.group),
-      label: KString.studentClassTitle, // 班级
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: KString.studentTitle, // 学生
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.access_time),
-      label: KString.recordsTitle, // 记录
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: KString.settingsTitle, // 设置
-    ),
-  ];
   static const List<Widget> tabBodies = [
     HomePage(),
     StudentClassPage(),
@@ -41,8 +19,31 @@ class IndexPage extends StatelessWidget {
     SettingsPage(),
   ];
 
+  List<BottomNavigationBarItem> _buildBottomTabs(AppLocalizations l10n) {
+    return [
+      BottomNavigationBarItem(icon: const Icon(Icons.home), label: l10n.homeTitle),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.group),
+        label: l10n.studentClassTitle,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.person),
+        label: l10n.studentTitle,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.access_time),
+        label: l10n.recordsTitle,
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.settings),
+        label: l10n.settingsTitle,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Consumer<CurrentIndexProvider>(
       builder:
           (
@@ -55,7 +56,7 @@ class IndexPage extends StatelessWidget {
               bottomNavigationBar: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 currentIndex: currentIndex,
-                items: bottomTabs,
+                items: _buildBottomTabs(l10n),
                 onTap: (index) => {currentIndexProvider.currentIndex = index},
               ),
               body: tabBodies[currentIndex],

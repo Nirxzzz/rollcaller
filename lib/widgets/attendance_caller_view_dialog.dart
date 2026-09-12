@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/attendance_caller_model.dart';
 import '../models/student_class_model.dart';
 import '../utils/student_class_dao.dart';
@@ -19,10 +20,15 @@ class AttendanceCallerViewDialog extends StatelessWidget {
     return FutureBuilder<StudentClassModel>(
       future: _getStudentClass(),
       builder: (context, snapshot) {
+        final l10n = AppLocalizations.of(context);
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {
           var studentClass = snapshot.data;
+          final created = attendanceCaller.created;
+          final createdText =
+              '${created.year}-${created.month.toString().padLeft(2, '0')}-${created.day.toString().padLeft(2, '0')} '
+              '${created.hour.toString().padLeft(2, '0')}:${created.minute.toString().padLeft(2, '0')}:${created.second.toString().padLeft(2, '0')}';
           return AlertDialog(
             title: Text(attendanceCaller.attendanceCallerName),
             content: Column(
@@ -30,16 +36,16 @@ class AttendanceCallerViewDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '班级: ${studentClass?.className}',
+                  l10n.classLabel(studentClass?.className ?? ''),
                   textAlign: TextAlign.left,
                 ),
                 Text(
-                  '备注: ${attendanceCaller.notes}',
+                  l10n.notesLabel(attendanceCaller.notes),
                   textAlign: TextAlign.left,
                 ),
-                //创建时间
+                // Creation time
                 Text(
-                  '创建时间: ${attendanceCaller.created.year}-${attendanceCaller.created.month.toString().padLeft(2, '0')}-${attendanceCaller.created.day.toString().padLeft(2, '0')} ${attendanceCaller.created.hour.toString().padLeft(2, '0')}:${attendanceCaller.created.minute.toString().padLeft(2, '0')}:${attendanceCaller.created.second.toString().padLeft(2, '0')}',
+                  l10n.createdAtLabel(createdText),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -47,7 +53,7 @@ class AttendanceCallerViewDialog extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('关闭'),
+                child: Text(l10n.close),
               ),
             ],
           );

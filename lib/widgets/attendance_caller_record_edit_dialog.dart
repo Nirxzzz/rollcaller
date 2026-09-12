@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../configs/attendance_status.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../models/attendance_call_record.dart';
 
 class AttendanceCallerRecordEditDialog extends StatefulWidget {
@@ -27,8 +28,9 @@ class _AttendanceCallerRecordEditDialogState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('编辑分数'),
+      title: Text(l10n.editScore),
       content: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 4.w),
@@ -42,7 +44,7 @@ class _AttendanceCallerRecordEditDialogState
               _toggleAttendanceStatus(_record);
             },
             child: Text(
-              _record.present.statusText,
+              _record.present.label(l10n),
               textAlign: TextAlign.center,
             ),
           ),
@@ -53,13 +55,13 @@ class _AttendanceCallerRecordEditDialogState
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('取消'),
+          child: Text(l10n.cancel),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop(_record);
           },
-          child: const Text('保存'),
+          child: Text(l10n.save),
         ),
       ],
     );
