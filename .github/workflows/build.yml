@@ -1,6 +1,6 @@
-# 手动触发：构建 Windows 桌面包 + Android APK
-# 用法：把本仓库推到 GitHub 后，Actions 页面 → Build Windows & Android → Run workflow
-name: Build Windows & Android
+# Manual dispatch: build Windows desktop package + Android APK.
+# Repo Actions page -> Build Windows & Android -> Run workflow.
+name: Build Windows and Android
 
 on:
   workflow_dispatch:
