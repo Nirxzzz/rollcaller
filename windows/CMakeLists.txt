@@ -2,6 +2,10 @@
 cmake_minimum_required(VERSION 3.14)
 project(rollcaller LANGUAGES CXX)
 
+# Suppress hard error from new MSVC (VS 18) for plugins still using the
+# deprecated /await experimental coroutine option (permission_handler_windows).
+add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
+
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "rollcaller")
