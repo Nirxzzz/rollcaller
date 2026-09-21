@@ -383,9 +383,7 @@ class _AttendanceRecordsState extends State<AttendanceCallRecordsPage> {
                                                                     .present
                                                                     .statusColor,
                                                           borderRadius:
-                                                              BorderRadius.circular(
-                                                                12.r,
-                                                              ),
+                                                              BorderRadius.zero,
                                                         ),
                                                         child: Text(
                                                           group
@@ -787,7 +785,7 @@ class _AttendanceRecordsState extends State<AttendanceCallRecordsPage> {
                                     ).colorScheme.outline,
                                   ),
 
-                                  borderRadius: BorderRadius.circular(4.r),
+                                  borderRadius: BorderRadius.zero,
                                 ),
                                 alignment: Alignment.centerLeft,
                                 height: double.infinity,

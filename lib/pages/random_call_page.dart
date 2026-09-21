@@ -13,6 +13,7 @@ import '../utils/random_caller_dao.dart';
 import '../utils/student_class_dao.dart';
 import '../utils/student_class_relation_dao.dart';
 import '../utils/student_dao.dart';
+import '../widgets/brutal/brutal_widgets.dart';
 import '../widgets/random_caller_add_edit_dialog.dart';
 import '../widgets/random_caller_view_dialog.dart';
 
@@ -208,10 +209,7 @@ class _RandomCallPageState extends State<RandomCallPage>
       children: [
         // 学生抽取卡片
         Card(
-          elevation: 10.w,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0.r),
-          ),
+          elevation: 0,
           child: Padding(
             padding: EdgeInsets.all(10.w),
             child: Column(
@@ -248,38 +246,17 @@ class _RandomCallPageState extends State<RandomCallPage>
                 SizedBox(
                   width: double.infinity,
                   height: 50.0.h,
-                  child: ElevatedButton(
+                  child: BrutalButton(
+                    label: _isPicking
+                        ? l10n.stopCallButtonLabel
+                        : l10n.startCallButtonLabel,
+                    icon: Icons.shuffle,
+                    color: Theme.of(context).colorScheme.secondary,
+                    foregroundColor:
+                        Theme.of(context).colorScheme.onSecondary,
                     onPressed: _currentStudent != null
                         ? _toggleRandomPick
                         : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      foregroundColor: Theme.of(
-                        context,
-                      ).colorScheme.onSecondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0.r),
-                      ),
-                      textStyle: Theme.of(context).textTheme.titleLarge,
-                      elevation: 10.0.w,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.shuffle,
-                          size: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.fontSize,
-                        ),
-                        SizedBox(width: 8.0.w),
-                        Text(
-                          _isPicking
-                              ? l10n.stopCallButtonLabel
-                              : l10n.startCallButtonLabel,
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ],
@@ -323,12 +300,13 @@ class _RandomCallPageState extends State<RandomCallPage>
         margin: EdgeInsets.all(4.w),
         padding: EdgeInsets.all(8.w),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0.r),
+          borderRadius: BorderRadius.zero,
           color: Theme.of(context).colorScheme.surfaceContainer,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withAlpha(100),
-              blurRadius: 15.0.r,
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
             ),
           ],
         ),
@@ -632,15 +610,15 @@ class _RandomCallPageState extends State<RandomCallPage>
       initialValue: _selectedCallerId,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0.r),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0.r),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0.r),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
         contentPadding: EdgeInsets.symmetric(
@@ -681,10 +659,7 @@ class _RandomCallPageState extends State<RandomCallPage>
     return Padding(
       padding: EdgeInsets.only(top: 8.0.h),
       child: Card(
-        elevation: 10.0.w,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0.r),
-        ),
+        elevation: 0,
         child: Padding(
           padding: EdgeInsets.all(8.0.w),
           child: Column(
@@ -713,7 +688,7 @@ class _RandomCallPageState extends State<RandomCallPage>
                     divisions: 9,
                     label: l10n.scoreValue(_score),
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    inactiveColor: Theme.of(context).colorScheme.onSecondary,
+                    inactiveColor: Theme.of(context).colorScheme.outline.withAlpha(60),
                     onChanged: (value) {
                       setState(() {
                         _score = value.round();
@@ -735,34 +710,12 @@ class _RandomCallPageState extends State<RandomCallPage>
               SizedBox(
                 width: double.infinity,
                 height: 50.0.h,
-                child: ElevatedButton(
+                child: BrutalButton(
+                  label: l10n.saveScore,
+                  icon: Icons.save,
+                  color: Theme.of(context).colorScheme.secondary,
+                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
                   onPressed: _currentStudent != null ? _saveScore : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.secondary, // 紫色背景
-                    foregroundColor: Theme.of(
-                      context,
-                    ).colorScheme.onSecondary, // 白色文字
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0.r),
-                    ),
-                    textStyle: Theme.of(context).textTheme.titleLarge,
-                    elevation: 10.0.w,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.save,
-                        size:
-                            Theme.of(context).textTheme.titleLarge?.fontSize ??
-                            24.0,
-                      ),
-                      SizedBox(width: 8.0.w),
-                      Text(l10n.saveScore),
-                    ],
-                  ),
                 ),
               ),
             ],
@@ -901,7 +854,7 @@ class _RandomCallPageState extends State<RandomCallPage>
             padding: EdgeInsets.all(8.0.w),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(8.0.r),
+              borderRadius: BorderRadius.zero,
               border: Border.all(
                 color: studentRecord.values.first.isNotEmpty
                     ? Theme.of(context).colorScheme.tertiary
@@ -977,10 +930,7 @@ class _RandomCallPageState extends State<RandomCallPage>
     return Padding(
       padding: EdgeInsets.only(top: 8.0.h),
       child: Card(
-        elevation: 10.0.w,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0.r),
-        ),
+        elevation: 0,
         child: Padding(
           padding: EdgeInsets.all(8.0.w),
           child: Column(

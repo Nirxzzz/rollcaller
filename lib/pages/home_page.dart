@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../l10n/generated/app_localizations.dart';
+import '../widgets/brutal/brutal_widgets.dart';
 import 'attendence_page.dart';
 import 'random_call_page.dart';
 
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -40,8 +42,8 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // 随机点名按钮
-                  _buildRandomRollCallButton(),
-                  _buildAttendenceButton(),
+                  _buildRandomRollCallButton(scheme),
+                  _buildAttendenceButton(scheme),
                 ],
               ),
               _selectedIndex == 0 ? RandomCallPage() : AttendencePage(),
@@ -52,107 +54,45 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Expanded _buildRandomRollCallButton() {
+  Expanded _buildRandomRollCallButton(ColorScheme scheme) {
+    final selected = _selectedIndex == 0;
     return Expanded(
       flex: 1,
       child: Container(
         margin: EdgeInsets.only(left: 8.w, right: 4.w),
-        child: ElevatedButton(
+        child: BrutalButton(
+          label: AppLocalizations.of(context).randomCallTab,
+          icon: Icons.shuffle,
+          color: selected ? scheme.primary : scheme.surface,
+          foregroundColor: selected ? scheme.onPrimary : scheme.outline,
           onPressed: () {
             setState(() {
               _selectedIndex = 0;
             });
             // 随机点名功能
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _selectedIndex == 0
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onPrimary,
-            foregroundColor: _selectedIndex == 0
-                ? Theme.of(context).colorScheme.onPrimary
-                : Theme.of(context).colorScheme.primary,
-            side: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0.r),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.shuffle,
-                size: Theme.of(context).textTheme.titleLarge?.fontSize,
-                color: _selectedIndex == 0
-                    ? Theme.of(context).colorScheme.onPrimary
-                    : Theme.of(context).colorScheme.primary,
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                AppLocalizations.of(context).randomCallTab,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _selectedIndex == 0
-                      ? Theme.of(context).colorScheme.onPrimary
-                      : Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
 
-  Expanded _buildAttendenceButton() {
+  Expanded _buildAttendenceButton(ColorScheme scheme) {
+    final selected = _selectedIndex == 1;
     return Expanded(
       flex: 1,
       child: Container(
         margin: EdgeInsets.only(left: 4.w, right: 8.w),
-        child: ElevatedButton(
+        child: BrutalButton(
+          label: AppLocalizations.of(context).attendanceTab,
+          icon: Icons.check_circle,
+          color: selected ? scheme.primary : scheme.surface,
+          foregroundColor: selected ? scheme.onPrimary : scheme.outline,
           onPressed: () {
             setState(() {
               _selectedIndex = 1;
             });
             // 签到点名功能
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _selectedIndex == 1
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onPrimary,
-            foregroundColor: _selectedIndex == 1
-                ? Theme.of(context).colorScheme.onPrimary
-                : Theme.of(context).colorScheme.primary,
-            side: BorderSide(
-              color: _selectedIndex == 1
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onPrimary,
-            ),
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0.r),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.check_circle,
-                size: Theme.of(context).textTheme.titleLarge?.fontSize,
-                color: _selectedIndex == 1
-                    ? Theme.of(context).colorScheme.onPrimary
-                    : Theme.of(context).colorScheme.primary,
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                AppLocalizations.of(context).attendanceTab,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _selectedIndex == 1
-                      ? Theme.of(context).colorScheme.onPrimary
-                      : Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

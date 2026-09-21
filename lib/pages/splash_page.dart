@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../configs/brutal_theme.dart';
+import '../widgets/brutal/brutal_widgets.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -57,16 +60,7 @@ class _SplashPageState extends State<SplashPage>
       textDirection: TextDirection.ltr,
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).colorScheme.primary.withAlpha(100),
-                Theme.of(context).colorScheme.primary.withAlpha(200),
-              ],
-            ),
-          ),
+          color: BrutalTheme.canvas(Theme.of(context).brightness),
           child: Center(
             child: AnimatedBuilder(
               animation: _animationController,
@@ -79,10 +73,14 @@ class _SplashPageState extends State<SplashPage>
                   ),
                 );
               },
-              child: Image.asset(
-                'assets/images/icon.png',
-                width: 200.w,
-                height: 200.w,
+              child: BrutalBox(
+                shadowSize: 6,
+                padding: EdgeInsets.all(16.w),
+                child: Image.asset(
+                  'assets/images/icon.png',
+                  width: 200.w,
+                  height: 200.w,
+                ),
               ),
             ),
           ),

@@ -32,21 +32,22 @@ extension ThemeStyleOptionExtension on ThemeStyleOption {
   }
 
   Color get color {
+    // 新粗野主义高饱和撞色
     switch (this) {
       case ThemeStyleOption.red:
-        return Colors.red;
+        return const Color(0xFFEF4444);
       case ThemeStyleOption.orange:
-        return Colors.orange;
+        return const Color(0xFFF97316);
       case ThemeStyleOption.yellow:
-        return Colors.yellow;
+        return const Color(0xFFFACC15);
       case ThemeStyleOption.green:
-        return Colors.green;
+        return const Color(0xFF22C55E);
       case ThemeStyleOption.blue:
-        return Colors.blue;
+        return const Color(0xFF3B82F6);
       case ThemeStyleOption.indigo:
-        return Colors.indigo;
+        return const Color(0xFF6366F1);
       case ThemeStyleOption.purple:
-        return Colors.purple;
+        return const Color(0xFFA855F7);
       case ThemeStyleOption.diy:
         return pickedColor;
     }

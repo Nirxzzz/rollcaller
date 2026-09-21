@@ -36,7 +36,7 @@ class _AttendanceCallerRecordEditDialogState
           padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 4.w),
           decoration: BoxDecoration(
             color: _record.present.statusColor,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.zero,
           ),
           child: InkWell(
             onTap: () {

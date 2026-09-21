@@ -53,11 +53,21 @@ class IndexPage extends StatelessWidget {
           ) {
             final int currentIndex = currentIndexProvider.currentIndex;
             return Scaffold(
-              bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                currentIndex: currentIndex,
-                items: _buildBottomTabs(l10n),
-                onTap: (index) => {currentIndexProvider.currentIndex = index},
+              bottomNavigationBar: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Theme.of(context).colorScheme.outline,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: currentIndex,
+                  items: _buildBottomTabs(l10n),
+                  onTap: (index) => {currentIndexProvider.currentIndex = index},
+                ),
               ),
               body: tabBodies[currentIndex],
             );

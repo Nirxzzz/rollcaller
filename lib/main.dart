@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (mounted) {
         context.read<ThemeSwitcherProvider>().setModelAndStyleWithoutNotify(
           ThemeMode.system,
-          ThemeStyleOption.blue,
+          ThemeStyleOption.yellow,
         );
       }
     }

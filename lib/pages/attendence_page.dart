@@ -241,17 +241,14 @@ class _AttendencePageState extends State<AttendencePage> {
                         Container(
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.surface,
-                            borderRadius: BorderRadius.circular(8.r),
+                            borderRadius: BorderRadius.zero,
                             boxShadow: [
                               BoxShadow(
-                                color: Theme.of(
-                                  context,
-                                ).shadowColor.withAlpha(100),
-                                spreadRadius: 1.r,
-                                blurRadius: 3.r,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
                           ),
                           child: TextField(
                             controller: _searchController,
@@ -278,17 +275,14 @@ class _AttendencePageState extends State<AttendencePage> {
                         Container(
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.surface,
-                            borderRadius: BorderRadius.circular(8.r),
+                            borderRadius: BorderRadius.zero,
                             boxShadow: [
                               BoxShadow(
-                                color: Theme.of(
-                                  context,
-                                ).shadowColor.withAlpha(20),
-                                spreadRadius: 1.r,
-                                blurRadius: 3.r,
-                                offset: const Offset(0, 1),
-                              ),
-                            ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -451,9 +445,7 @@ class _AttendencePageState extends State<AttendencePage> {
                                                       .present
                                                       .statusColor,
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                        12.r,
-                                                      ),
+                                                      BorderRadius.zero,
                                                 ),
                                                 child: Text(
                                                   _attendanceCallerGroup!
@@ -511,17 +503,14 @@ class _AttendencePageState extends State<AttendencePage> {
                   margin: EdgeInsets.only(left: 8.w, right: 8.w),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(8.r),
+                    borderRadius: BorderRadius.zero,
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.shadow.withAlpha(100),
-                        spreadRadius: 1.r,
-                        blurRadius: 3.r,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(12.w),
@@ -559,14 +548,14 @@ class _AttendencePageState extends State<AttendencePage> {
                           height: 8.h,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(4.r),
+                            borderRadius: BorderRadius.zero,
                           ),
                           child: FractionallySizedBox(
                             widthFactor: attendanceRate / 100,
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(4.r),
+                                borderRadius: BorderRadius.zero,
                               ),
                             ),
                           ),
@@ -584,7 +573,7 @@ class _AttendencePageState extends State<AttendencePage> {
                                   height: 16.h,
                                   decoration: BoxDecoration(
                                     color: entry.key.statusColor,
-                                    borderRadius: BorderRadius.circular(2.r),
+                                    borderRadius: BorderRadius.zero,
                                   ),
                                 ),
                                 SizedBox(width: 4.w),
@@ -643,13 +632,13 @@ class _AttendencePageState extends State<AttendencePage> {
           bottom: 4.0.h,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0.r),
+          borderRadius: BorderRadius.zero,
           color: Theme.of(context).colorScheme.surfaceContainer,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withAlpha(100),
-              blurRadius: 10.0.r,
-              offset: const Offset(0, 2),
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
             ),
           ],
         ),
@@ -932,15 +921,15 @@ class _AttendencePageState extends State<AttendencePage> {
       initialValue: _selectedCallerId,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.zero,
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
         contentPadding: EdgeInsets.symmetric(

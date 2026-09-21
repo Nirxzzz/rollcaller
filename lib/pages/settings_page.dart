@@ -217,7 +217,7 @@ class _SettingsState extends State<SettingsPage> {
           color: _lastBackUpModel?.result == true
               ? Colors.green[100]
               : Colors.red[100],
-          borderRadius: BorderRadius.circular(8.0.r),
+          borderRadius: BorderRadius.zero,
         ),
         child: Row(
           children: [
@@ -273,18 +273,17 @@ class _SettingsState extends State<SettingsPage> {
           padding: EdgeInsets.only(top: 20.0.h, left: 8.0.w, right: 8.0.w),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(8.0.r),
+            borderRadius: BorderRadius.zero,
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withAlpha(100),
-                spreadRadius: 1.r,
-                blurRadius: 2.r,
-                offset: const Offset(0, 1),
-              ),
-            ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
             border: Border.all(
               color: Theme.of(context).colorScheme.outline,
-              width: 1.0,
+              width: 2.w,
             ),
           ),
           child: Column(
@@ -300,19 +299,19 @@ class _SettingsState extends State<SettingsPage> {
                         labelText: l10n.webDavServerUrl,
                         labelStyle: Theme.of(context).textTheme.labelLarge,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0.r),
+                          borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.outline,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0.r),
+                          borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.outline,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0.r),
+                          borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary,
                             width: 2,
@@ -337,19 +336,19 @@ class _SettingsState extends State<SettingsPage> {
                   labelText: l10n.username,
                   labelStyle: Theme.of(context).textTheme.labelLarge,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.primary,
                       width: 2.0,
@@ -371,19 +370,19 @@ class _SettingsState extends State<SettingsPage> {
                   labelText: l10n.password,
                   labelStyle: Theme.of(context).textTheme.labelLarge,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
+                    borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.primary,
                       width: 2.0,
@@ -482,12 +481,10 @@ class _SettingsState extends State<SettingsPage> {
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0.r),
-                        ),
                         side: BorderSide(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          width: 1.0.w,
+              color: Theme.of(context).colorScheme.onPrimary,
+                          width: 2.w,
+
                         ),
                       ),
                       child: Row(
@@ -571,10 +568,7 @@ class _SettingsState extends State<SettingsPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0.r),
-                        ),
-                        elevation: 10.w,
+                        elevation: 0,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -628,15 +622,14 @@ class _SettingsState extends State<SettingsPage> {
       padding: EdgeInsets.all(8.0.w),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8.0.r),
+        borderRadius: BorderRadius.zero,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.shadow.withAlpha(100),
-            spreadRadius: 1.r,
-            blurRadius: 2.r,
-            offset: const Offset(0, 1),
-          ),
-        ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -705,10 +698,7 @@ class _SettingsState extends State<SettingsPage> {
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
-                  ),
-                  elevation: 10.w,
+                  elevation: 0,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -768,12 +758,10 @@ class _SettingsState extends State<SettingsPage> {
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   padding: EdgeInsets.symmetric(vertical: 14.0.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0.r),
-                  ),
                   side: BorderSide(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    width: 1.w,
+              color: Theme.of(context).colorScheme.onPrimary,
+                    width: 2.w,
+
                   ),
                 ),
                 child: Row(
@@ -857,15 +845,14 @@ class _SettingsState extends State<SettingsPage> {
           padding: EdgeInsets.all(8.0.w),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(8.0.r),
+            borderRadius: BorderRadius.zero,
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withAlpha(100),
-                spreadRadius: 1.r,
-                blurRadius: 2.r,
-                offset: const Offset(0, 1),
-              ),
-            ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
           ),
           child: _allBackUpModels.isNotEmpty
               ? RadioGroup<String>(
@@ -1241,15 +1228,14 @@ class _SettingsState extends State<SettingsPage> {
       margin: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(6.w),
+        borderRadius: BorderRadius.zero,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withAlpha(100),
-            spreadRadius: 1.w,
-            blurRadius: 2.w,
-            offset: Offset(0, 2),
-          ),
-        ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
         border: Border.all(
           color: Theme.of(context).colorScheme.outline,
           width: 2.w,
@@ -1307,12 +1293,12 @@ class _SettingsState extends State<SettingsPage> {
             color: selected
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(6.r),
+            borderRadius: BorderRadius.zero,
             border: Border.all(
               color: selected
                   ? Colors.transparent
                   : Theme.of(context).colorScheme.outline,
-              width: 1.w,
+              width: 2.w,
             ),
           ),
           child: FittedBox(
@@ -1343,13 +1329,12 @@ class _SettingsState extends State<SettingsPage> {
         margin: EdgeInsets.symmetric(horizontal: 8.w),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(6.w),
+          borderRadius: BorderRadius.zero,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withAlpha(100),
-              spreadRadius: 1.w,
-              blurRadius: 2.w,
-              offset: Offset(0, 2),
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
             ),
           ],
           border: Border.all(
@@ -1406,12 +1391,12 @@ class _SettingsState extends State<SettingsPage> {
                                 color: _selectedThemeMode == ThemeMode.system
                                     ? _selectedThemeStyle?.color ?? Colors.blue
                                     : Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(6.r),
+                                borderRadius: BorderRadius.zero,
                                 border: Border.all(
                                   color: _selectedThemeMode == ThemeMode.system
                                       ? Colors.transparent
                                       : Theme.of(context).colorScheme.outline,
-                                  width: 1.w,
+                                  width: 2.w,
                                 ),
                               ),
                               child: Text(
@@ -1448,12 +1433,12 @@ class _SettingsState extends State<SettingsPage> {
                                 color: _selectedThemeMode == ThemeMode.light
                                     ? _selectedThemeStyle?.color ?? Colors.blue
                                     : Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(6.w),
+                                borderRadius: BorderRadius.zero,
                                 border: Border.all(
                                   color: _selectedThemeMode == ThemeMode.light
                                       ? Colors.transparent
                                       : Theme.of(context).colorScheme.outline,
-                                  width: 1.w,
+                                  width: 2.w,
                                 ),
                               ),
                               child: Text(
@@ -1490,12 +1475,12 @@ class _SettingsState extends State<SettingsPage> {
                                 color: _selectedThemeMode == ThemeMode.dark
                                     ? _selectedThemeStyle?.color ?? Colors.blue
                                     : Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(6.w),
+                                borderRadius: BorderRadius.zero,
                                 border: Border.all(
                                   color: _selectedThemeMode == ThemeMode.dark
                                       ? Colors.transparent
                                       : Theme.of(context).colorScheme.outline,
-                                  width: 1.w,
+                                  width: 2.w,
                                 ),
                               ),
                               child: Text(
@@ -1548,7 +1533,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.red
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1557,7 +1542,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1597,7 +1582,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.orange
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1606,7 +1591,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1646,7 +1631,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.yellow
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1655,7 +1640,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1695,7 +1680,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.green
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1704,7 +1689,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1746,7 +1731,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.blue
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1755,7 +1740,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1794,7 +1779,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.indigo
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1803,7 +1788,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1842,7 +1827,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.purple
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1851,7 +1836,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(
@@ -1889,7 +1874,7 @@ class _SettingsState extends State<SettingsPage> {
                                             ThemeStyleOption.diy
                                         ? _selectedThemeStyle!.color
                                         : Theme.of(context).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(6.w),
+                                    borderRadius: BorderRadius.zero,
                                     border: Border.all(
                                       color:
                                           _selectedThemeStyle ==
@@ -1898,7 +1883,7 @@ class _SettingsState extends State<SettingsPage> {
                                           : Theme.of(
                                               context,
                                             ).colorScheme.outline,
-                                      width: 1.w,
+                                      width: 2.w,
                                     ),
                                   ),
                                   child: Text(

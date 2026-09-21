@@ -146,7 +146,7 @@ class _RandomRecordsState extends State<RandomCallRecordsPage> {
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.surfaceContainer,
-                                  borderRadius: BorderRadius.circular(16.r),
+                                  borderRadius: BorderRadius.zero,
                                 ),
                                 child: Column(
                                   children: [
@@ -787,7 +787,7 @@ class _RandomRecordsState extends State<RandomCallRecordsPage> {
                                       context,
                                     ).colorScheme.outline,
                                   ),
-                                  borderRadius: BorderRadius.circular(4.r),
+                                  borderRadius: BorderRadius.zero,
                                 ),
                                 alignment: Alignment.centerLeft,
                                 height: double.infinity,

@@ -102,18 +102,19 @@ class _StudentClassState extends State<StudentClassPage> {
                               color: Theme.of(
                                 context,
                               ).colorScheme.surfaceContainerHigh,
-                              elevation: 10.0.w,
+                              elevation: 0,
                               margin: EdgeInsets.symmetric(
                                 horizontal: 16.0.h,
                                 vertical: 8.0.w,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0.r),
+                                borderRadius: BorderRadius.zero,
                                 side: BorderSide(
-                                  color: Theme.of(
+              color: Theme.of(
                                     context,
-                                  ).colorScheme.outline.withAlpha(150),
-                                  width: 1.0.w,
+                                  ).colorScheme.outline,
+                                  width: 2.w,
+
                                 ),
                               ),
 
@@ -266,7 +267,7 @@ class _StudentClassState extends State<StudentClassPage> {
             padding: EdgeInsets.symmetric(horizontal: 16.0.h, vertical: 8.0.w),
             decoration: BoxDecoration(
               color: deprecationColor,
-              borderRadius: BorderRadius.circular(12.0.r),
+              borderRadius: BorderRadius.zero,
             ),
             child: Row(
               children: [

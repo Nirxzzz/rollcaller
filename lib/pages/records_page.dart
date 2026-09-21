@@ -66,11 +66,9 @@ class _RecordState extends State<RecordPage> {
             foregroundColor: _selectedIndex == 0 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
             side: BorderSide(
               color: Theme.of(context).colorScheme.onPrimary,
+              width: 2.w,
             ),
             padding: EdgeInsets.symmetric(vertical: 12.0.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0.r),
-            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -116,11 +114,9 @@ class _RecordState extends State<RecordPage> {
             foregroundColor: _selectedIndex == 1 ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
             side: BorderSide(
               color: _selectedIndex == 1 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onPrimary,
+              width: 2.w,
             ),
             padding: EdgeInsets.symmetric(vertical: 12.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0.r),
-            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

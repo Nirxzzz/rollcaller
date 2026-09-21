@@ -315,9 +315,9 @@ class _StudentPageState extends State<StudentPage> {
           hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Theme.of(context).colorScheme.onSurface,
           ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.r)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.zero),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.zero,
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.primary,
             ),
@@ -383,17 +383,17 @@ class _StudentPageState extends State<StudentPage> {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withAlpha(150),
-          width: 1.0.w,
+          color: Theme.of(context).colorScheme.outline,
+          width: 2.w,
         ),
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.zero,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.surfaceContainer,
-            blurRadius: 2.r,
-            offset: const Offset(0, 1),
-          ),
-        ],
+              color: Theme.of(context).colorScheme.outline,
+              offset: Offset(4.w, 4.h),
+              blurRadius: 0,
+            ),
+          ],
         
       ),
       
@@ -422,7 +422,7 @@ class _StudentPageState extends State<StudentPage> {
                         color: Theme.of(
                           context,
                         ).colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: BorderRadius.zero,
                       ),
                       child: Text(
                         student.studentNumber,

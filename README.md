@@ -8,6 +8,30 @@
 
 ---
 
+## 🧱 新粗野主义 UI（Neo-Brutalism）定制版
+
+本分支将默认外观重设计为 **新粗野主义风格**：粗黑描边、硬边偏移投影（无模糊）、高饱和撞色、直角、粗体字。业务逻辑与原版完全一致。
+
+- 设计系统：`lib/configs/brutal_theme.dart`（颜色 / 描边 / 硬投影 / ThemeData）
+- 通用组件：`lib/widgets/brutal/brutal_widgets.dart`（`BrutalBox`、`BrutalButton`）
+- 主题切换、深浅色模式、自定义主题色（DIY 取色）全部保留
+
+### 一键构建
+
+```bash
+# Android（输出 build/app/outputs/flutter-apk/app-release.apk）
+./build_android.sh
+```
+
+```bat
+:: Windows（输出 build\windows\x64\runner\Release\rollcaller.exe）
+build_windows.bat
+```
+
+环境要求：Flutter SDK（stable）+ Android Studio / Visual Studio（C++ 桌面开发工作负载）。
+
+---
+
 ## 功能特性
 
 ### 随机点名
