@@ -213,5 +213,32 @@
   "themeColorIndigo": "青色",
   "themeColorPurple": "紫色",
   "themeColorCustom": "自定义",
-  "customTheme": "自定义主题"
+  "customTheme": "自定义主题",
+  "aiImportTitle": "AI 智能导入",
+  "aiImportIntro": "粘贴名单文本或选择照片，AI 自动提取学号与姓名",
+  "aiImportPasteHint": "在此粘贴名单文本（任意格式均可，如：张三 2025001，李四 2025002……）",
+  "aiImportPickImage": "选择照片识别",
+  "aiImportRecognize": "开始识别",
+  "aiImportParsing": "AI 识别中…",
+  "aiImportPreviewTitle": "识别结果预览（可编辑）",
+  "aiImportSelectAll": "全选",
+  "aiImportConfirm": "导入所选（{count} 人）",
+  "@aiImportConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiImportNoResult": "未识别到学生，请检查输入或更换照片",
+  "aiImportNeedConfig": "请先在「设置 → AI 识别设置」中填写 API Key",
+  "aiImportFileTooLarge": "图片过大，请裁剪后重试",
+  "aiSettingsTitle": "AI 识别设置",
+  "aiSettingsIntro": "配置后可在「学生」页一键从文本或照片导入名单",
+  "aiBaseUrlLabel": "接口地址 (Base URL):",
+  "aiApiKeyLabel": "API Key:",
+  "aiModelLabel": "模型:",
+  "aiGetKeyButton": "申请 DeepSeek API Key",
+  "aiSettingsSaved": "AI 配置已保存",
+  "aiImportPasteText": "粘贴文本"
 }

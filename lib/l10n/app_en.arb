@@ -409,5 +409,32 @@
   "themeColorIndigo": "Indigo",
   "themeColorPurple": "Purple",
   "themeColorCustom": "Custom",
-  "customTheme": "Custom theme"
+  "customTheme": "Custom theme",
+  "aiImportTitle": "AI Smart Import",
+  "aiImportIntro": "Paste roster text or pick a photo; AI extracts student numbers and names",
+  "aiImportPasteHint": "Paste roster text here (any format, e.g. Zhang San 2025001, Li Si 2025002...)",
+  "aiImportPickImage": "Pick a photo",
+  "aiImportRecognize": "Recognize",
+  "aiImportParsing": "Recognizing…",
+  "aiImportPreviewTitle": "Preview (editable)",
+  "aiImportSelectAll": "Select all",
+  "aiImportConfirm": "Import selected ({count})",
+  "@aiImportConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiImportNoResult": "No students recognized; check the input or try another photo",
+  "aiImportNeedConfig": "Configure the AI service in Settings → AI first",
+  "aiImportFileTooLarge": "Image too large; please crop and retry",
+  "aiSettingsTitle": "AI Recognition Settings",
+  "aiSettingsIntro": "After configuring, import rosters from text or photos on the Students page",
+  "aiBaseUrlLabel": "Base URL:",
+  "aiApiKeyLabel": "API Key:",
+  "aiModelLabel": "Model:",
+  "aiGetKeyButton": "Get a DeepSeek API Key",
+  "aiSettingsSaved": "AI settings saved",
+  "aiImportPasteText": "Paste text"
 }

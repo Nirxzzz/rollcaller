@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdav_client/webdav_client.dart' show Client, newClient;
 
 import '../configs/back_up_type.dart';
@@ -26,6 +27,7 @@ import '../utils/random_caller_dao.dart';
 import '../utils/student_class_dao.dart';
 import '../utils/student_class_relation_dao.dart';
 import '../utils/student_dao.dart';
+import '../widgets/brutal/brutal_widgets.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -56,6 +58,17 @@ class _SettingsState extends State<SettingsPage> {
   Client? _client;
   // 安全存储
   final _storage = SharedPreferences.getInstance();
+  // AI 识别设置
+  final TextEditingController _aiBaseUrlController =
+      TextEditingController(text: KString.aiDefaultBaseUrl);
+  final TextEditingController _aiApiKeyController = TextEditingController();
+  final TextEditingController _aiModelController =
+      TextEditingController(text: KString.aiDefaultModel);
+  static const List<String> _aiPresetModels = [
+    'deepseek-flash',
+    'deepseek-v4-flash',
+    'deepseek-v4-pro',
+  ];
 
   // 获取WebDav配置
 
@@ -91,6 +104,54 @@ class _SettingsState extends State<SettingsPage> {
       });
     });
     _getBackUpDataFuture = _getBackUpData();
+    // 读取 AI 识别设置
+    _getAiConfig();
+  }
+
+  Future<void> _getAiConfig() async {
+    final storage = await _storage;
+    if (!mounted) return;
+    setState(() {
+      _aiBaseUrlController.text = storage.getString(KString.aiBaseUrlKey) ??
+          KString.aiDefaultBaseUrl;
+      _aiApiKeyController.text =
+          storage.getString(KString.aiApiKeyKey) ?? '';
+      _aiModelController.text = storage.getString(KString.aiModelKey) ??
+          KString.aiDefaultModel;
+    });
+  }
+
+  Future<void> _saveAiConfig() async {
+    final storage = await _storage;
+    await storage.setString(
+      KString.aiBaseUrlKey,
+      _aiBaseUrlController.text.trim().isNotEmpty
+          ? _aiBaseUrlController.text.trim()
+          : KString.aiDefaultBaseUrl,
+    );
+    await storage.setString(
+      KString.aiApiKeyKey,
+      _aiApiKeyController.text.trim(),
+    );
+    await storage.setString(
+      KString.aiModelKey,
+      _aiModelController.text.trim().isNotEmpty
+          ? _aiModelController.text.trim()
+          : KString.aiDefaultModel,
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context).aiSettingsSaved,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onInverseSurface,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   Future<bool> _getWebDavConfig() async {
@@ -166,6 +227,8 @@ class _SettingsState extends State<SettingsPage> {
                 padding: EdgeInsets.all(8.0.w),
                 child: Column(
                   children: [
+                    _buildAiSetting(),
+                    SizedBox(height: 8.h),
                     _buildLastBackUpStatus(),
                     SizedBox(height: 8.h),
                     _buildWebDavInfo(),
@@ -612,6 +675,91 @@ class _SettingsState extends State<SettingsPage> {
         ),
         SizedBox(height: 8.h),
       ],
+    );
+  }
+
+  Container _buildAiSetting() {
+    final l10n = AppLocalizations.of(context);
+    return Container(
+      padding: EdgeInsets.all(8.0.w),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.zero,
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.outline,
+            offset: Offset(4.w, 4.h),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.aiSettingsTitle,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            l10n.aiSettingsIntro,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          SizedBox(height: 8.h),
+          TextField(
+            controller: _aiBaseUrlController,
+            decoration: InputDecoration(labelText: l10n.aiBaseUrlLabel),
+          ),
+          SizedBox(height: 8.h),
+          TextField(
+            controller: _aiApiKeyController,
+            obscureText: true,
+            decoration: InputDecoration(labelText: l10n.aiApiKeyLabel),
+          ),
+          SizedBox(height: 8.h),
+          TextField(
+            controller: _aiModelController,
+            decoration: InputDecoration(labelText: l10n.aiModelLabel),
+          ),
+          SizedBox(height: 4.h),
+          Wrap(
+            spacing: 8.w,
+            children: [
+              for (final model in _aiPresetModels)
+                ActionChip(
+                  label: Text(model, style: Theme.of(context).textTheme.labelSmall),
+                  onPressed: () =>
+                      setState(() => _aiModelController.text = model),
+                ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => launchUrl(
+                    Uri.parse(KString.deepSeekConsoleUrl),
+                    mode: LaunchMode.externalApplication,
+                  ),
+                  icon: const Icon(Icons.open_in_new, size: 18),
+                  label: Text(l10n.aiGetKeyButton,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              BrutalButton(
+                label: l10n.save,
+                expand: false,
+                fontSize: 20.sp,
+                onPressed: _saveAiConfig,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

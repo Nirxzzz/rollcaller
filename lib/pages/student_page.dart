@@ -20,6 +20,7 @@ import '../utils/random_call_record_dao.dart';
 import '../utils/student_class_dao.dart';
 import '../utils/student_class_relation_dao.dart';
 import '../utils/student_dao.dart';
+import '../widgets/ai_import_dialog.dart';
 import '../widgets/student_add_edit_dialog.dart';
 import '../widgets/student_view_dialog.dart';
 
@@ -124,6 +125,17 @@ class _StudentPageState extends State<StudentPage> {
                   icon: Icon(
                     Icons.download,
                     color: Theme.of(context).colorScheme.secondary,
+                    size: Theme.of(context).textTheme.headlineLarge?.fontSize,
+                  ),
+                ),
+                // AI 智能导入
+                IconButton(
+                  onPressed: () {
+                    _importStudentsFromAi();
+                  },
+                  icon: Icon(
+                    Icons.auto_awesome,
+                    color: Theme.of(context).colorScheme.primary,
                     size: Theme.of(context).textTheme.headlineLarge?.fontSize,
                   ),
                 ),
@@ -288,6 +300,29 @@ class _StudentPageState extends State<StudentPage> {
     setState(() {
       _classGroupsFuture = _getAllStudentsByClassNames();
     });
+  }
+
+  // AI 智能导入入口：弹窗返回导入人数后刷新并提示
+  Future<void> _importStudentsFromAi() async {
+    final count = await showDialog<int>(
+      context: context,
+      builder: (_) => const AiImportDialog(),
+    );
+    if (count != null && count > 0 && mounted) {
+      _refreshClassGroupData();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context).importStudentsSuccess(count),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onInverseSurface,
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   void _onRefresh() async {

@@ -27,4 +27,12 @@ class KString {
 
   // Language preference key (SharedPreferences): 'system', 'zh' or 'en'
   static const String languagePreferenceKey = 'languagePreference';
+
+  // AI import configuration keys (SharedPreferences)
+  static const String aiBaseUrlKey = 'aiBaseUrl';
+  static const String aiApiKeyKey = 'aiApiKey';
+  static const String aiModelKey = 'aiModel';
+  static const String aiDefaultBaseUrl = 'https://api.deepseek.com';
+  static const String aiDefaultModel = 'deepseek-flash';
+  static const String deepSeekConsoleUrl = 'https://platform.deepseek.com/api_keys';
 }
