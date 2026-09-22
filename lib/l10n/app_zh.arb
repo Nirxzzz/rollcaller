@@ -240,5 +240,14 @@
   "aiModelLabel": "模型:",
   "aiGetKeyButton": "申请 DeepSeek API Key",
   "aiSettingsSaved": "AI 配置已保存",
-  "aiImportPasteText": "粘贴文本"
+  "aiImportPasteText": "粘贴文本",
+  "aiFetchModels": "拉取模型列表",
+  "aiFetchOk": "拉取到 {count} 个可用模型",
+  "@aiFetchOk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

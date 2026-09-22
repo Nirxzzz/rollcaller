@@ -130,6 +130,46 @@ class AiImportService {
     return _parseStudents(answer);
   }
 
+  /// 拉取 /models 模型列表（OpenAI 兼容），供设置页一键选用
+  static Future<List<String>> listModels() async {
+    final config = await loadConfig();
+    final dio = Dio(BaseOptions(
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 30),
+    ));
+    final Response<dynamic> resp;
+    try {
+      resp = await dio.get(
+        _chatCompletionsUrl(config.baseUrl).replaceFirst(
+          '/chat/completions',
+          '/models',
+        ),
+        options: Options(headers: {
+          'Authorization': 'Bearer ${config.apiKey}',
+        }),
+      );
+    } on DioException catch (e) {
+      final code = e.response?.statusCode;
+      if (code == 401) throw AiImportException('AUTH_FAILED');
+      final body = e.response?.data;
+      String detail = '';
+      if (body is Map && body['error'] is Map) {
+        detail = (body['error']['message'] ?? '').toString();
+      }
+      throw AiImportException(
+          'HTTP_${code ?? '???'} ${detail.isNotEmpty ? detail : e.message ?? ''}');
+    }
+    final data = resp.data['data'];
+    if (data is! List) throw AiImportException('BAD_RESPONSE');
+    final ids = data
+        .whereType<Map>()
+        .map((m) => (m['id'] ?? '').toString())
+        .where((s) => s.isNotEmpty)
+        .toList()
+      ..sort();
+    return ids;
+  }
+
   /// 拼接 chat/completions 地址，兼容 base_url 带/不带 /v1 的写法
   static String _chatCompletionsUrl(String baseUrl) {
     var url = baseUrl.trim();

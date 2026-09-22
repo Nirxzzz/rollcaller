@@ -436,5 +436,14 @@
   "aiModelLabel": "Model:",
   "aiGetKeyButton": "Get a DeepSeek API Key",
   "aiSettingsSaved": "AI settings saved",
-  "aiImportPasteText": "Paste text"
+  "aiImportPasteText": "Paste text",
+  "aiFetchModels": "Fetch model list",
+  "aiFetchOk": "Fetched {count} available models",
+  "@aiFetchOk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

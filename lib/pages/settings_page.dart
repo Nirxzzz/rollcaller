@@ -20,6 +20,7 @@ import '../l10n/generated/app_localizations.dart';
 import '../models/back_up_model.dart';
 import '../providers/locale_provider.dart';
 import '../providers/them_switcher_provider.dart';
+import '../services/ai_import_service.dart';
 import '../utils/attendance_call_record_dao.dart';
 import '../utils/attendance_caller_dao.dart';
 import '../utils/random_call_record_dao.dart';
@@ -69,6 +70,11 @@ class _SettingsState extends State<SettingsPage> {
     'deepseek-v4-flash',
     'deepseek-v4-pro',
   ];
+  // 从服务端拉取的可用模型
+  List<String> _aiFetchedModels = [];
+  bool _fetchingModels = false;
+  String? _aiFetchError;
+  int? _aiFetchOkCount;
 
   // 获取WebDav配置
 
@@ -121,8 +127,33 @@ class _SettingsState extends State<SettingsPage> {
     });
   }
 
-  Future<void> _saveAiConfig() async {
-    final storage = await _storage;
+  // 先保存当前填写的关键，再拉取可用模型列表
+  Future<void> _fetchAiModels() async {
+    final l10n = AppLocalizations.of(context);
+    setState(() {
+      _fetchingModels = true;
+      _aiFetchError = null;
+      _aiFetchOkCount = null;
+    });
+    try {
+      await _saveAiConfig();
+      final models = await AiImportService.listModels();
+      if (!mounted) return;
+      setState(() {
+        _aiFetchedModels = models;
+        _aiFetchOkCount = models.length;
+        _fetchingModels = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _aiFetchError = '${l10n.loadFailed(e.toString())}';
+        _fetchingModels = false;
+      });
+    }
+  }
+
+  Future<void> _saveAiConfig() async {    final storage = await _storage;
     await storage.setString(
       KString.aiBaseUrlKey,
       _aiBaseUrlController.text.trim().isNotEmpty
@@ -726,6 +757,7 @@ class _SettingsState extends State<SettingsPage> {
           SizedBox(height: 4.h),
           Wrap(
             spacing: 8.w,
+            runSpacing: 8.h,
             children: [
               for (final model in _aiPresetModels)
                 ActionChip(
@@ -733,6 +765,45 @@ class _SettingsState extends State<SettingsPage> {
                   onPressed: () =>
                       setState(() => _aiModelController.text = model),
                 ),
+              for (final model in _aiFetchedModels)
+                ActionChip(
+                  avatar: const Icon(Icons.cloud, size: 14),
+                  label: Text(model, style: Theme.of(context).textTheme.labelSmall),
+                  onPressed: () =>
+                      setState(() => _aiModelController.text = model),
+                ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            children: [
+              OutlinedButton.icon(
+                onPressed: _fetchingModels ? null : _fetchAiModels,
+                icon: _fetchingModels
+                    ? SizedBox(
+                        width: 14.w,
+                        height: 14.w,
+                        child:
+                            const CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.cloud_download, size: 18),
+                label: Text(l10n.aiFetchModels),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: Text(
+                  _aiFetchError ??
+                      (_aiFetchOkCount != null
+                          ? l10n.aiFetchOk(_aiFetchOkCount!)
+                          : ''),
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: _aiFetchError != null
+                        ? Theme.of(context).colorScheme.error
+                        : Theme.of(context).colorScheme.outline,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
           SizedBox(height: 8.h),
@@ -750,11 +821,12 @@ class _SettingsState extends State<SettingsPage> {
                 ),
               ),
               SizedBox(width: 8.w),
-              BrutalButton(
-                label: l10n.save,
-                expand: false,
-                fontSize: 20.sp,
-                onPressed: _saveAiConfig,
+              Expanded(
+                child: BrutalButton(
+                  label: l10n.save,
+                  fontSize: 20.sp,
+                  onPressed: _saveAiConfig,
+                ),
               ),
             ],
           ),
